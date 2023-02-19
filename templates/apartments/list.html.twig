@@ -1,5 +1,29 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+  <div class="block-content">
     <h1>Appartements</h1>
+  </div>
+  <div class="block-content">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for apartment in apartments %}
+      <div class="col">
+        <div class="card h-100">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h3 class="card-title">{{ apartment.name }}</h3>
+            <p class="card-text">{{ apartment.address }}</p>{# 
+            <p class="card-text">{{ apartment.complement_address }}</p> #}
+            <p class="card-text">{{ apartment.postcode }}</p>
+            <p class="card-text">{{ apartment.city }}</p>
+          </div>
+          <div class="card-footer">
+            <a href="{{ path('app_apartment_update', {'id': apartment.id}) }}" class="btn btn-warning">Modifier</a>
+            <a href="{{ path('app_apartment_delete', {'id': apartment.id}) }}" class="btn btn-danger">Supprimer</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}
