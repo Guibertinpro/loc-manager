@@ -1,0 +1,32 @@
+#lc-logo {
+  width: 2rem;
+  margin-right: 1rem;
+}
+.link-light, .link-light:hover {
+  color: $clr-light-grey;
+}
+.btn-toggle-nav li a {
+  display: block;
+  margin-left: 1.5rem;
+  margin-top: 0.4rem;
+}
+.sidebar-item {
+  padding: 0;
+  margin-top: 0.5rem;
+}
+#sidebar i {
+  width: 1.5rem;
+  text-align: left;
+}
+.btn-toggle::after {
+  content: url('/assets/img/arrow-right-white.svg');
+  width: 8px;
+  height: auto;
+  position: absolute;
+  right: -22px;
+  top: 2px;
+  transition: transform .35s ease;
+}
+.btn-toggle[aria-expanded="true"]::after {
+  transform: rotate(90deg);
+}

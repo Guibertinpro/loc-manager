@@ -1,0 +1,46 @@
+<div id="sidebar" class="flex-shrink-0 p-3 bg-dark" style="width: 280px;">
+	<a href="{{ path('app_home') }}" class="d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom link-light sidebar-item">
+		<img src="{{ asset('build/images/locmanager-logo.svg') }}" alt="logo loc manager" id="lc-logo">
+		<span class="fs-5 fw-semibold">Loc Manager</span>
+	</a>
+	<ul class="list-unstyled ps-0">
+		<li class="mb-1">
+			<a href="{{ path('app_home') }}" class="nav-link active link-light" aria-current="page">
+        <i class="fas fa-house"></i>
+        Tableau de bord
+      </a>
+		</li>
+		<li class="mb-1">
+			<button class="btn btn-toggle align-items-center rounded collapsed link-light sidebar-item position-relative" data-bs-toggle="collapse" data-bs-target="#reservations-collapse" aria-expanded="false">
+        <i class="fa-solid fa-bed"></i>
+				Réservations
+			</button>
+			<div class="collapse" id="reservations-collapse" style="">
+				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+					<li>
+						<a href="{{ path('app_reservations_list') }}" class="rounded link-light">Toutes les réservations</a>
+					</li>
+					<li>
+						<a href="{{ path('app_reservation_new') }}" class="rounded link-light">Nouvelle réservation</a>
+					</li>
+				</ul>
+			</div>
+		</li>
+		<li class="mb-1">
+			<button class="btn btn-toggle align-items-center rounded collapsed link-light sidebar-item position-relative" data-bs-toggle="collapse" data-bs-target="#apartments-collapse" aria-expanded="false">
+        <i class="fa-solid fa-building"></i>
+				Apartements
+			</button>
+			<div class="collapse" id="apartments-collapse" style="">
+				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+					<li>
+						<a href="{{ path('app_apartments_list') }}" class="rounded link-light">Tous les apartements</a>
+					</li>
+					<li>
+						<a href="{{ path('app_apartment_new') }}" class="rounded link-light">Nouvel appartement</a>
+					</li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+</div>

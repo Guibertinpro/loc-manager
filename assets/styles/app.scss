@@ -1,0 +1,40 @@
+@import 'helper/variables';
+
+@import "~bootstrap/scss/bootstrap.scss";
+@import '~@fortawesome/fontawesome-free';
+@import '~@fortawesome/fontawesome-free/css/regular.css';
+@import '~@fortawesome/fontawesome-free/css/solid.css';
+@import '~@fontsource/roboto';
+
+@import 'layout/header';
+@import 'layout/footer';
+@import 'components/sidebar';
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+body {
+  background: $bg-light-grey;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  min-height: 100vh;
+  color: $clr-dark-grey;
+}
+a {
+  color: initial;
+  text-decoration: none;
+}
+a:hover {
+  color: initial;
+  text-decoration: none;
+}
+main {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.clr-white {
+  color: $clr-white;
+}
