@@ -54,13 +54,21 @@ a:hover {
   border: #5fb65c;
   background: #5fb65c;
 }
-.btn-danger, .btn-danger:hover {
+.btn-danger {
   background: #d63333;
   border: #d63333;
 }
-.btn-warning, .btn-warning:hover {
+.btn-danger:hover {
+  background: #b52323;
+  border: #b52323;
+}
+.btn-warning {
   background: #e7da1b;
   border: #e7da1b;
+}
+.btn-warning:hover {
+  background: #d3c81a;
+  border: #d3c81a;
 }
 h1, .h1 {
   font-size: 1.5rem;
@@ -68,4 +76,9 @@ h1, .h1 {
 }
 .card-text {
   margin: 0;
+}
+.title-icon {
+  width: 30px;
+  height: auto;
+  margin-right: 1rem;
 }

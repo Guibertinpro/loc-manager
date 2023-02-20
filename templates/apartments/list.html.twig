@@ -5,7 +5,7 @@
     <h1><i class="fa-solid fa-building clr-black me-3"></i>Appartements</h1>
   </div>
   <div class="block-content">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
       {% for apartment in apartments %}
       <div class="col">
         <div class="card h-100" style="border-top: 10px solid {{ apartment.color }};">
@@ -16,7 +16,7 @@
             <p class="card-text">{{ apartment.postcode }}</p>
             <p class="card-text">{{ apartment.city }}</p>
           </div>
-          <div class="card-footer">
+          <div class="card-footer d-flex justify-content-around">
             <a href="{{ path('app_apartment_update', {'id': apartment.id}) }}" class="btn btn-warning">Modifier</a>
             <a href="{{ path('app_apartment_delete', {'id': apartment.id}) }}" class="btn btn-danger">Supprimer</a>
           </div>
