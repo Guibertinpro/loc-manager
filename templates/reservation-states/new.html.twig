@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+  <div class="block-content d-flex">
+    <img src="{{ asset('build/images/icon-add-reservation.svg') }}" alt="icon add reservation" class="title-icon">
+    <h1>Ajout d'un statut de réservation</h1>
+  </div>
+  <div class="block-content form-block">
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

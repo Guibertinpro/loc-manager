@@ -42,5 +42,18 @@
 				</ul>
 			</div>
 		</li>
+		<li class="mb-1">
+			<button class="btn btn-toggle align-items-center rounded collapsed link-light sidebar-item position-relative" data-bs-toggle="collapse" data-bs-target="#reservation-states-collapse" aria-expanded="false">
+        <i class="fa-solid fa-gear"></i>
+				Paramètres
+			</button>
+			<div class="collapse" id="reservation-states-collapse" style="">
+				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+					<li>
+						<a href="{{ path('app_reservation_states_list') }}" class="rounded link-light">Statuts de réservation</a>
+					</li>
+				</ul>
+			</div>
+		</li>
 	</ul>
 </nav>

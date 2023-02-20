@@ -50,9 +50,13 @@ a:hover {
   margin: 1rem;
   box-shadow: 0 0 7px -4px;
 }
-.btn-primary, .btn-primary:hover {
+.btn-primary {
   border: #5fb65c;
   background: #5fb65c;
+}
+.btn-primary:hover {
+  border: #399336;
+  background: #399336;
 }
 .btn-danger {
   background: #d63333;
@@ -87,4 +91,7 @@ h1, .h1 {
 }
 table td {
   vertical-align: middle;
+}
+.add-title-icon {
+  font-size: 1.2rem;
 }
