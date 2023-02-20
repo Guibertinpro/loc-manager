@@ -2,8 +2,13 @@
 
 {% block body %}
   <div class="block-content d-flex">
-    <img src="{{ asset('build/images/icon-add-reservation.svg') }}" alt="icon add reservation" class="title-icon">
-    <h1>Ajout d'une réservation</h1>
+    {% if app.request.attributes.get('_route') == 'app_reservation_update' %}
+      <img src="{{ asset('build/images/icon-edit-reservation.svg') }}" alt="icon add reservation" class="title-icon">
+      <h1>Modification de la réservation n°{{ app.request.attributes.get('id') }}</h1>
+    {% else %}
+      <img src="{{ asset('build/images/icon-add-reservation.svg') }}" alt="icon add reservation" class="title-icon">
+      <h1>Ajout d'une réservation</h1>
+    {% endif %}
   </div>
   <div class="block-content form-block">
     {{ form_start(form) }}

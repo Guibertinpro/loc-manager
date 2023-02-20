@@ -34,6 +34,9 @@ class Reservation
     private ?string $clientEmail = null;
 
     #[ORM\Column]
+    private ?string $clientPhone = null;
+
+    #[ORM\Column]
     private ?int $nbOfPersons = null;
 
     #[ORM\Column(length: 255)]
@@ -116,6 +119,18 @@ class Reservation
     public function setClientEmail(string $clientEmail): self
     {
         $this->clientEmail = $clientEmail;
+
+        return $this;
+    }
+
+    public function getClientPhone(): ?string
+    {
+        return $this->clientPhone;
+    }
+
+    public function setClientPhone(string $clientPhone): self
+    {
+        $this->clientPhone = $clientPhone;
 
         return $this;
     }

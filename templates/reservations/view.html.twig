@@ -1,9 +1,9 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-  <div class="block-content d-flex">
-    <img src="{{ asset('build/images/icon-add-reservation.svg') }}" alt="icon add reservation" class="title-icon">
-    <h1>Réservation n°{{ reservation.id }}</h1>
+  <div class="block-content d-flex justify-content-between align-items-center">
+    <h1><i class="fa-solid fa-bed clr-black me-3"></i>Réservation n°{{ reservation.id }}</h1>
+    <a href="{{ path('app_reservation_update', {'id': reservation.id}) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square btn-title-icon me-2"></i>Modifier</a>
   </div>
   <div class="block-content">
     <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -14,7 +14,7 @@
             <div class="card-text block-client-reservation">
               <p class="m-1">{{ reservation.clientFirstname }} {{ reservation.clientLastname }}</p>
               <p class="m-1">{{ reservation.clientEmail }}</p>
-              <p class="m-1">{{ reservation.clientFirstname }}</p>
+              <p class="m-1">{{ reservation.clientPhone }}</p>
             </div>
           </div>
         </div>
