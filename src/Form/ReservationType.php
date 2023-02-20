@@ -8,6 +8,7 @@ use App\Entity\ReservationState;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,6 +24,7 @@ class ReservationType extends AbstractType
             ->add('endAt', DateType::class, ['label' => 'Date de départ'])
             ->add('clientFirstname', TextType::class, ['label' => 'Prénom du client'])
             ->add('clientLastname', TextType::class, ['label' => 'Nom du client'])
+            ->add('clientEmail', EmailType::class, ['label' => 'Email du client'])
             ->add('nbOfPersons', NumberType::class, ['label' => 'Nombre de personnes'])
             ->add('price', TextType::class, ['label' => 'Prix'])
             ->add('apartment', EntityType::class, [

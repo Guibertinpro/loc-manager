@@ -30,6 +30,9 @@ class Reservation
     #[ORM\Column(length: 255)]
     private ?string $clientLastname = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $clientEmail = null;
+
     #[ORM\Column]
     private ?int $nbOfPersons = null;
 
@@ -101,6 +104,18 @@ class Reservation
     public function setClientLastname(string $clientLastname): self
     {
         $this->clientLastname = $clientLastname;
+
+        return $this;
+    }
+
+    public function getClientEmail(): ?string
+    {
+        return $this->clientEmail;
+    }
+    
+    public function setClientEmail(string $clientEmail): self
+    {
+        $this->clientEmail = $clientEmail;
 
         return $this;
     }

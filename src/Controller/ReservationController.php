@@ -15,10 +15,20 @@ class ReservationController extends AbstractController
   #[Route('/reservations/list', name: 'app_reservations_list')]
   public function list(ReservationRepository $reservationRepository)
   {
-    $reservations = $reservationRepository->findAll();
+    $reservations = $reservationRepository->findBy([], ['id' => 'DESC']);
 
     return $this->render('reservations/list.html.twig', [
-     'reservations' => $reservations,
+      'reservations' => $reservations,
+    ]);
+  }
+
+  #[Route('/reservation/view/{id}', name: 'app_reservation_view')]
+  public function view(int $id, ReservationRepository $reservationRepository, EntityManagerInterface $entityManagerInterface)
+  {
+    $reservation = $reservationRepository->find($id);
+
+    return $this->render('reservations/view.html.twig', [
+      'reservation' => $reservation,
     ]);
   }
 

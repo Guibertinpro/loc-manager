@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+  <div class="block-content d-flex">
+    <img src="{{ asset('build/images/icon-add-reservation.svg') }}" alt="icon add reservation" class="title-icon">
+    <h1>Réservation n°{{ reservation.id }}</h1>
+  </div>
+  <div class="block-content">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="mb-3">Détail client</h2>
+            <div class="card-text block-client-reservation">
+              <p class="m-1">{{ reservation.clientFirstname }} {{ reservation.clientLastname }}</p>
+              <p class="m-1">{{ reservation.clientEmail }}</p>
+              <p class="m-1">{{ reservation.clientFirstname }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="mb-3">Détail réservation</h2>
+            <div class="card-text block-details-reservation">
+              <p class="m-1"><span class="label-text">Statut :</span> <span style="background: {{ reservation.state.color }}; border-radius:10px; padding: 0.3rem 0.5rem;">{{ reservation.state.name }}</span></p>
+              <p class="m-1"><span class="label-text">Appartement :</span> {{ reservation.apartment.name }}</p>
+              <p class="m-1"><span class="label-text">Nombre de personnes :</span> {{ reservation.nbOfPersons }}</p>
+              <p class="m-1"><span class="label-text">Date :</span> Du {{ reservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }} au {{ reservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }}</p>
+              <p class="m-1"><span class="label-text">Tarif :</span> {{ reservation.price }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

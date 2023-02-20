@@ -28,14 +28,6 @@ a:hover {
   color: initial;
   text-decoration: none;
 }
-/* main {
-  display: flex;
-  flex-wrap: nowrap;
-  height: 100vh;
-  max-height: 100vh;
-  overflow-x: auto;
-  overflow-y: hidden;
-} */
 .clr-white {
   color: $clr-white;
 }
@@ -78,6 +70,17 @@ h1, .h1 {
   font-size: 1.5rem;
   margin: 0;
 }
+h2, .h2 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+h3, .h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+.block-container-content {
+  padding: 1rem;
+}
 .card-title {
   margin-bottom: 1rem;
 }
@@ -94,4 +97,7 @@ table td {
 }
 .add-title-icon {
   font-size: 1.2rem;
+}
+.label-text {
+  font-weight: bold;
 }
