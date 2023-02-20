@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Apartment;
 use App\Entity\Reservation;
+use App\Entity\ReservationState;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -28,6 +29,11 @@ class ReservationType extends AbstractType
                 'class' => Apartment::class,
                 'choice_label' => 'name',
                 'label' => 'Appartement'
+            ])
+            ->add('state', EntityType::class, [
+                'class' => ReservationState::class,
+                'choice_label' => 'name',
+                'label' => 'Statut'
             ])
             ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
         ;

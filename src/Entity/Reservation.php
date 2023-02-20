@@ -20,7 +20,7 @@ class Reservation
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $endAt = null;
 
-    #[ORM\OneToOne(targetEntity: Apartment::class)]
+    #[ORM\ManyToOne(targetEntity: Apartment::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Apartment $apartment = null;
 
@@ -36,7 +36,7 @@ class Reservation
     #[ORM\Column(length: 255)]
     private ?string $price = null;
 
-    #[ORM\OneToOne(targetEntity: ReservationState::class)]
+    #[ORM\ManyToOne(targetEntity: ReservationState::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?ReservationState $state = null;
 
