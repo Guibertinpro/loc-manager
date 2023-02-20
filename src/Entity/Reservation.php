@@ -36,6 +36,10 @@ class Reservation
     #[ORM\Column(length: 255)]
     private ?string $price = null;
 
+    #[ORM\OneToOne(targetEntity: ReservationState::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ReservationState $state = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +125,18 @@ class Reservation
     public function setPrice(string $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getState(): ?ReservationState
+    {
+        return $this->state;
+    }
+
+    public function setState(ReservationState $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }
