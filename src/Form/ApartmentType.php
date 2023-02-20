@@ -18,7 +18,7 @@ class ApartmentType extends AbstractType
         $builder
             ->add('name', TextType::class, ['label' => 'Nom de l\'appartement'])
             ->add('address', TextType::class, ['label' => 'Adresse de l\'appartement'])
-            ->add('complement_address', TextType::class, ['label' => 'Complement de l\'appartement'])
+            ->add('complementAddress', TextType::class, ['label' => 'Complement de l\'appartement'])
             ->add('postcode', NumberType::class, ['label' => 'Code postal'])
             ->add('city', TextType::class, ['label' => 'Ville'])
             ->add('color', ColorType::class, ['label' => 'Couleur'])

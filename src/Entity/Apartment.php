@@ -20,7 +20,7 @@ class Apartment
     private ?string $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $complement_address = null;
+    private ?string $complementAddress = null;
 
     #[ORM\Column(length: 5)]
     private ?int $postcode = null;
@@ -62,12 +62,12 @@ class Apartment
 
     public function getComplementAddress(): ?string
     {
-        return $this->complement_address;
+        return $this->complementAddress;
     }
 
-    public function setComplementAddress(string $complement_address): self
+    public function setComplementAddress(string $complementAddress): self
     {
-        $this->complement_address = $complement_address;
+        $this->complementAddress = $complementAddress;
 
         return $this;
     }

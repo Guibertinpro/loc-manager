@@ -5,4 +5,9 @@
     <img src="{{ asset('build/images/icon-add-reservation.svg') }}" alt="icon add reservation" class="title-icon">
     <h1>Ajout d'une réservation</h1>
   </div>
+  <div class="block-content form-block">
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+  </div>
 {% endblock %}

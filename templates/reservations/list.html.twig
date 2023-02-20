@@ -4,4 +4,25 @@
   <div class="block-content">
     <h1><i class="fa-solid fa-bed clr-black me-3"></i>Réservations</h1>
   </div>
+  <div class="block-content">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {% for reservation in reservations %}
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="card-title">{{ reservation.clientFirstname }} {{ reservation.clientLastname }}</h3>
+            <p class="card-text"><span class="fw-bold">Date :</span> {{ reservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }} - {{ reservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}</p>
+            <p class="card-text"><span class="fw-bold">Nombre de personne :</span>  {{ reservation.nbOfPersons }}</p>
+            <p class="card-text"><span class="fw-bold">Tarif :</span> {{ reservation.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
+            {# <p class="card-text"><span class="fw-bold">Tarif :</span> {{ reservation.apartment }}</p> #}
+          </div>
+          <div class="card-footer d-flex justify-content-around">
+            <a href="{{ path('app_reservation_update', {'id': reservation.id}) }}" class="btn btn-warning">Modifier</a>
+            <a href="{{ path('app_reservation_delete', {'id': reservation.id}) }}" class="btn btn-danger">Supprimer</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}
