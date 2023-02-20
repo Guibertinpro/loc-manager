@@ -18,6 +18,7 @@ body {
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   min-height: 100vh;
   color: $clr-dark-grey;
+  font-size: 14px;
 }
 a {
   color: initial;
@@ -49,13 +50,17 @@ a:hover {
   margin: 1rem;
   box-shadow: 0 0 7px -4px;
 }
-.btn-primary {
+.btn-primary, .btn-primary:hover {
   border: #5fb65c;
   background: #5fb65c;
 }
-.btn-primary:hover {
-  border: #5fb65c;
-  background: #4c9d49;
+.btn-danger, .btn-danger:hover {
+  background: #d63333;
+  border: #d63333;
+}
+.btn-warning, .btn-warning:hover {
+  background: #e7da1b;
+  border: #e7da1b;
 }
 h1, .h1 {
   font-size: 1.5rem;

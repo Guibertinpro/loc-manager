@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Apartment;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,12 +15,11 @@ class ApartmentType extends AbstractType
     {
         $builder
             ->add('name' )
-            ->add('pictureFileName')
             ->add('address')
             ->add('complement_address')
             ->add('postcode')
             ->add('city')
-            ->add('color')
+            ->add('color', ColorType::class)
             ->add('save', SubmitType::class)
         ;
     }

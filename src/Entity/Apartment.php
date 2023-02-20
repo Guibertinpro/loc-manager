@@ -16,9 +16,6 @@ class Apartment
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $pictureFileName = null;
-
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
@@ -47,18 +44,6 @@ class Apartment
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getPictureFileName(): ?string
-    {
-        return $this->pictureFileName;
-    }
-
-    public function setPictureFileName(?string $pictureFileName): self
-    {
-        $this->pictureFileName = $pictureFileName;
 
         return $this;
     }

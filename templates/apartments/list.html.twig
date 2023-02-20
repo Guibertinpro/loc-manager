@@ -2,14 +2,13 @@
 
 {% block body %}
   <div class="block-content">
-    <h1>Appartements</h1>
+    <h1><i class="fa-solid fa-building clr-black me-3"></i>Appartements</h1>
   </div>
   <div class="block-content">
     <div class="row row-cols-1 row-cols-md-3 g-4">
       {% for apartment in apartments %}
       <div class="col">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="...">
+        <div class="card h-100" style="border-top: 10px solid {{ apartment.color }};">
           <div class="card-body">
             <h3 class="card-title">{{ apartment.name }}</h3>
             <p class="card-text">{{ apartment.address }}</p>{# 
