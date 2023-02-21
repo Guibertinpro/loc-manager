@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-  <div class="block-content d-flex">
+  <div class="block-title d-flex">
     {% if app.request.attributes.get('_route') == 'app_reservation_update' %}
       <img src="{{ asset('build/images/icon-edit-reservation.svg') }}" alt="icon add reservation" class="title-icon">
       <h1>Modification de la réservation n°{{ app.request.attributes.get('id') }}</h1>

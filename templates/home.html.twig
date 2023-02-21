@@ -1,11 +1,38 @@
 {% extends "base.html.twig" %}
 
+{% block javascripts %}
+  {{ parent() }}
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+  <script>
+    window.onload = () => {
+      let calendarEl = document.getElementById('calendar');
+      let calendar = new FullCalendar.Calendar(calendarEl, {
+        height: 'auto',
+        initialView: 'dayGridMonth',
+        locale: 'fr',
+        timeZone: 'Europe/Paris',
+        headerToolbar: {
+          start: 'prev,next',
+          center: 'title',
+          end: 'dayGridMonth,timeGridWeek'
+        },
+        buttonText: {
+          month: 'Mois',
+          week: 'Semaine'
+        },
+        events: {{ reservations|raw }}
+      });
+      calendar.render();
+    };
+  </script>
+{% endblock %}
+
+
 {% block title %}{{ parent() }} - Tableau de bord{% endblock %}
 
 {% block body %}
-  <div class="block-content d-flex justify-content-between align-items-center">
+  <div class="block-title">
     <h1>Tableau de bord</h1>
-    
   </div>
   <div class="block-content d-flex justify-content-around align-items-center">
     <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
@@ -13,14 +40,19 @@
       <p class="h1 mb-0">{{ totalSales|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
     </div>
     <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
-      <p class="fw-bold mb-2">Nombre d'appartements</p>
-      <p class="h1 mb-0">{{ nbApartments }}</p>
+      <p class="fw-bold mb-2">Locations en cours</p>
+      <p class="h1 mb-0">{{ nbReservations }}</p>
     </div>
     <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
       <p class="fw-bold mb-2">Nombre de réservations</p>
       <p class="h1 mb-0">{{ nbReservations }}</p>
     </div>
+    <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
+      <p class="fw-bold mb-2">Nombre d'appartements</p>
+      <p class="h1 mb-0">{{ nbApartments }}</p>
+    </div>
   </div>
-  <div class="block-content">
+  <div class="block-content calendar-block">
+    <div id="calendar"></div>
   </div>
 {% endblock %}

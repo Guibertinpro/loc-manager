@@ -42,6 +42,10 @@ a:hover {
   margin: 1rem;
   box-shadow: 0 0 7px -4px;
 }
+.block-title {
+  padding: 1rem 1rem 0 1rem;
+  text-align: center;
+}
 .btn-primary {
   border: #5fb65c;
   background: #5fb65c;
@@ -102,7 +106,7 @@ table td {
   font-weight: bold;
 }
 .circle-stat {
-  border: 2px solid black;
+  border: 2px solid $clr-grey;
   border-radius: 10px;
   padding: 1rem;
 }

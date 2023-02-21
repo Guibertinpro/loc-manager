@@ -25,7 +25,7 @@ class ReservationType extends AbstractType
             ->add('clientFirstname', TextType::class, ['label' => 'Prénom du client'])
             ->add('clientLastname', TextType::class, ['label' => 'Nom du client'])
             ->add('clientEmail', EmailType::class, ['label' => 'Email du client'])
-            ->add('clientPhone', NumberType::class, ['label' => 'Téléphone du client'])
+            ->add('clientPhone', TextType::class, ['label' => 'Téléphone du client'])
             ->add('nbOfPersons', NumberType::class, ['label' => 'Nombre de personnes'])
             ->add('price', TextType::class, ['label' => 'Prix'])
             ->add('apartment', EntityType::class, [

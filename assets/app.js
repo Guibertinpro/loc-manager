@@ -3,6 +3,7 @@ import './styles/app.scss';
 import './bootstrap';
 import { Tooltip, Toast, Popover } from 'bootstrap';
 import 'popper.js';
+import 'fullcalendar';
 
 const $ = require('jquery');
 
