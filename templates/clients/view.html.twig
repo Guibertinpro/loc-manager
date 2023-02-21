@@ -2,7 +2,7 @@
 
 {% block body %}
   <div class="block-title d-flex justify-content-between align-items-center">
-    <h1><i class="fa-solid fa-bed clr-black me-3"></i>Client n°{{ client.id }}</h1>
+    <h1><i class="fa-solid fa-user clr-black me-3"></i>Client n°{{ client.id }}</h1>
     <a href="{{ path('app_client_update', {'id': client.id}) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square btn-title-icon me-2"></i>Modifier</a>
   </div>
   <div class="block-content">

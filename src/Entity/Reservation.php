@@ -25,7 +25,10 @@ class Reservation
     private ?Apartment $apartment = null;
 
     #[ORM\Column]
-    private ?int $nbOfPersons = null;
+    private ?int $nbOfAdults = null;
+
+    #[ORM\Column]
+    private ?int $nbOfChildren = null;
 
     #[ORM\Column(length: 255)]
     private ?string $price = null;
@@ -79,14 +82,26 @@ class Reservation
         return $this;
     }
 
-    public function getNbOfPersons(): ?int
+    public function getNbOfAdults(): ?int
     {
-        return $this->nbOfPersons;
+        return $this->nbOfAdults;
     }
 
-    public function setNbOfPersons(int $nbOfPersons): self
+    public function setNbOfAdults(int $nbOfAdults): self
     {
-        $this->nbOfPersons = $nbOfPersons;
+        $this->nbOfAdults = $nbOfAdults;
+
+        return $this;
+    }
+
+    public function getNbOfChildren(): ?int
+    {
+        return $this->nbOfChildren;
+    }
+
+    public function setNbOfChildren(int $nbOfChildren): self
+    {
+        $this->nbOfChildren = $nbOfChildren;
 
         return $this;
     }

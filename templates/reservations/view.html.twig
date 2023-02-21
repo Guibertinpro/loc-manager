@@ -15,6 +15,10 @@
               <p class="m-2">{{ client.firstname }} {{ client.lastname }}</p>
               <p class="m-2"><a class="link" href="mailto:{{ client.email }}">{{ client.email }}</a></p>
               <p class="m-2">{{ client.phone }}</p>
+              <p class="m-2">{{ client.address }}</p>
+              <p class="m-2">{{ client.complementAddress }}</p>
+              <p class="m-2">{{ client.postcode }}</p>
+              <p class="m-2">{{ client.city }}</p>
             </div>
           </div>
         </div>
@@ -26,7 +30,8 @@
             <div class="card-text block-details-reservation">
               <p class="m-2"><span class="label-text">Statut :</span> <span style="background: {{ reservation.state.color }}; border-radius:10px; padding: 0.3rem 0.5rem; color:white;">{{ reservation.state.name }}</span></p>
               <p class="m-2"><span class="label-text">Appartement :</span> {{ reservation.apartment.name }}</p>
-              <p class="m-2"><span class="label-text">Nombre de personnes :</span> {{ reservation.nbOfPersons }}</p>
+              <p class="m-2"><span class="label-text">Nombre d'adultes :</span> {{ reservation.nbOfAdults }}</p>
+              <p class="m-2"><span class="label-text">Nombre d'enfants :</span> {{ reservation.nbOfChildren }}</p>
               <p class="m-2"><span class="label-text">Date :</span> Du {{ reservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }} au {{ reservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }}</p>
               <p class="m-2"><span class="label-text">Tarif :</span> {{ reservation.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
             </div>

@@ -27,7 +27,8 @@ class ReservationType extends AbstractType
           'choice_label' => 'getFullName',
           'label' => 'Client'
       ])
-      ->add('nbOfPersons', NumberType::class, ['label' => 'Nombre de personnes'])
+      ->add('nbOfAdults', NumberType::class, ['label' => 'Nombre d\'adultes'])
+      ->add('nbOfChildren', NumberType::class, ['label' => 'Nombre d\'enfants'])
       ->add('price', TextType::class, ['label' => 'Prix'])
       ->add('apartment', EntityType::class, [
           'class' => Apartment::class,

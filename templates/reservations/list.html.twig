@@ -30,7 +30,10 @@
                 {{ reservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }} <br/>
                 {{ reservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}
               </td>
-              <td>{{ reservation.nbOfPersons }}</td>
+              <td>
+                Adultes : {{ reservation.nbOfAdults }}<br/>
+                Enfants : {{ reservation.nbOfChildren }}
+              </td>
               <td>{{ reservation.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</td>
               <td><span style="padding:0.5rem 1rem; background:{{ reservation.state.color }}; border-radius:10px; color:white;">{{ reservation.state.name }}</span></td>
               <td>
