@@ -26,7 +26,7 @@ class IndexController extends AbstractController
         'id' => $reservation->getId(),
         'start' => $reservation->getStartAt()->format('Y-m-d'),
         'end' => $reservation->getEndAt()->format('Y-m-d'),
-        'title' => $reservation->getFullName(),
+        'title' => $reservation->getClient()->getFullName(),
         'backgroundColor' => $reservation->getState()->getColor(),
         'textColor' => 'white',
         'url' => $reservationController->generateUrl('app_reservation_view', [

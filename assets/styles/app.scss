@@ -114,3 +114,6 @@ table td {
   text-underline-position: under;
   color: #2dabd8;
 }
+.block-content .row +.row {
+  margin-top: 0rem;
+}

@@ -6,29 +6,88 @@
     <a href="{{ path('app_client_update', {'id': client.id}) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square btn-title-icon me-2"></i>Modifier</a>
   </div>
   <div class="block-content">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="row g-4">
       <div class="col">
-        <div class="card">
+        <div class="card h-100">
           <div class="card-body">
             <h2 class="mb-3">Informations client</h2>
             <div class="card-text block-client-client">
-              <p class="m-2">{{ client.firstname }} {{ client.lastname }}</p>
-              <p class="m-2"><a class="link" href="mailto:{{ client.email }}">{{ client.email }}</a></p>
+              <p class="m-2">{{ client.firstname }}
+                {{ client.lastname }}</p>
+              <p class="m-2">
+                <a class="link" href="mailto:{{ client.email }}">{{ client.email }}</a>
+              </p>
               <p class="m-2">{{ client.phone }}</p>
+              <p class="m-2">{{ client.address }}</p>
+              <p class="m-2">{{ client.complementAddress }}</p>
+              <p class="m-2">{{ client.postcode }}</p>
+              <p class="m-2">{{ client.city }}</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card">
+      <div class="col-7">
+        <div class="card h-100">
           <div class="card-body">
-            <h2 class="mb-3">Réservations du client</h2>
+            <h2 class="mb-3">Statistiques</h2>
             <div class="card-text block-details-client">
-              
+              <div class="d-flex justify-content-around align-items-center">
+                <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
+                  <p class="fw-bold mb-2">Total ventes</p>
+                  <p class="h1 mb-0">{# {{ totalSales|format_currency('EUR', {rounding_mode: 'floor'}) }} #}</p>
+                </div>
+                <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
+                  <p class="fw-bold mb-2">Locations en cours</p>
+                  <p class="h1 mb-0">{# {{ reservationsInProgress }} #}</p>
+                </div>
+                <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
+                  <p class="fw-bold mb-2">Nombre de réservations</p>
+                  <p class="h1 mb-0">{# {{ nbReservations }} #}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="row g-4">
+      <div class="col">
+        <div class="card">
+          <div class="card-body block-details-client">
+            <h2 class="mb-3">Réservations du client</h2>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Numéro</th>
+                  <th scope="col">Appartement</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Prix</th>
+                  <th scope="col">Statut</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for res in client.reservations %}
+                  <tr>
+                    <td>{{ res.id }}</td>
+                    <td>{{ res.apartment.name }}</td>
+                    <td>
+                      {{ res.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }} <br/>
+                      {{ res.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}
+                    </td>
+                    <td>{{ res.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</td>
+                    <td><span style="padding:0.5rem 1rem; background:{{ res.state.color }}; border-radius:10px; color:white;">{{ res.state.name }}</span></td>
+                    <td>
+                      <a href="{{ path('app_reservation_view', {'id': res.id}) }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-magnifying-glass-plus"></i></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 {% endblock %}
