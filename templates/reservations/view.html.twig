@@ -24,7 +24,7 @@
           <div class="card-body">
             <h2 class="mb-3">Détail réservation</h2>
             <div class="card-text block-details-reservation">
-              <p class="m-1"><span class="label-text">Statut :</span> <span style="background: {{ reservation.state.color }}; border-radius:10px; padding: 0.3rem 0.5rem;">{{ reservation.state.name }}</span></p>
+              <p class="m-1"><span class="label-text">Statut :</span> <span style="background: {{ reservation.state.color }}; border-radius:10px; padding: 0.3rem 0.5rem; color:white;">{{ reservation.state.name }}</span></p>
               <p class="m-1"><span class="label-text">Appartement :</span> {{ reservation.apartment.name }}</p>
               <p class="m-1"><span class="label-text">Nombre de personnes :</span> {{ reservation.nbOfPersons }}</p>
               <p class="m-1"><span class="label-text">Date :</span> Du {{ reservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }} au {{ reservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }}</p>

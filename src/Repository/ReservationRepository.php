@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Reservation;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -52,6 +53,18 @@ class ReservationRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->select('SUM(r.price)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    public function getReservationsInProgress(): int
+    {
+        $now = new DateTime('now');
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r.id)')
+            ->where(':now BETWEEN r.startAt AND r.endAt')
+            ->setParameter('now', $now)
             ->getQuery()
             ->getSingleScalarResult()
         ;

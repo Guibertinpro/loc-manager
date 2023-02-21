@@ -10,15 +10,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class IndexController extends AbstractController
 {
   #[Route('/', name: 'app_home')]
-  public function home(ApartmentRepository $apartmentRepository, ReservationRepository $reservationRepository)
+  public function home(ApartmentRepository $apartmentRepository, ReservationRepository $reservationRepository, ReservationController $reservationController)
   {
     $number_of_apartments = $apartmentRepository->getTotalApartments();
     $number_of_reservations = $reservationRepository->getTotalReservations();
     $total_sales = $reservationRepository->getTotalReservationsSales();
 
+    // Get all reservations data
     $reservations = $reservationRepository->findAll();
     $newReservations = [];
 
+    // Format reservations data
     foreach ($reservations as $reservation) {
       $newReservations[] = [
         'id' => $reservation->getId(),
@@ -26,17 +28,25 @@ class IndexController extends AbstractController
         'end' => $reservation->getEndAt()->format('Y-m-d'),
         'title' => $reservation->getFullName(),
         'backgroundColor' => $reservation->getState()->getColor(),
-        'textColor' => 'white'
+        'textColor' => 'white',
+        'url' => $reservationController->generateUrl('app_reservation_view', [
+          'id' => $reservation->getId(),
+        ])
       ];
     }
 
+    // Encode reservations data
     $data = json_encode($newReservations);
+
+    // Get all reservations in progress
+    $reservationsInProgress = $reservationRepository->getReservationsInProgress();
 
     return $this->render('home.html.twig', [
       'nbApartments' => $number_of_apartments,
       'nbReservations' => $number_of_reservations,
       'totalSales' => $total_sales,
-      'reservations' => $data
+      'reservations' => $data,
+      'reservationsInProgress' => $reservationsInProgress,
     ]);
   }
 }
