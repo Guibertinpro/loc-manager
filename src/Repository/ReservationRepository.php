@@ -49,10 +49,32 @@ class ReservationRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getTotalReservationsByClientId(?int $id = null): int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r.id)')
+            ->where('r.client = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
     public function getTotalReservationsSales(): int
     {
         return $this->createQueryBuilder('r')
             ->select('SUM(r.price)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    public function getTotalReservationsSalesByClientId(?int $id): int
+    {
+        return $this->createQueryBuilder('r')
+            ->select('SUM(r.price)')
+            ->where('r.client = :id')
+            ->setParameter('id', $id)
             ->getQuery()
             ->getSingleScalarResult()
         ;
@@ -65,6 +87,20 @@ class ReservationRepository extends ServiceEntityRepository
             ->select('COUNT(r.id)')
             ->where(':now BETWEEN r.startAt AND r.endAt')
             ->setParameter('now', $now)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    public function getReservationsInProgressByClientId(?int $id = null): int
+    {
+        $now = new DateTime('now');
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r.id)')
+            ->where(':now BETWEEN r.startAt AND r.endAt')
+            ->andWhere('r.client = :id')
+            ->setParameter('now', $now)
+            ->setParameter('id', $id)
             ->getQuery()
             ->getSingleScalarResult()
         ;

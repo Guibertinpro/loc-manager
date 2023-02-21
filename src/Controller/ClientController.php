@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Form\ClientType;
 use App\Repository\ClientRepository;
+use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,12 +50,20 @@ class ClientController extends AbstractController
   }
 
   #[Route('/client/view/{id}', name: 'app_client_view')]
-  public function view(int $id, ClientRepository $clientRepository)
+  public function view(int $id, ClientRepository $clientRepository, ReservationRepository $reservationRepository)
   {
     $client = $clientRepository->find($id);
+    $clientReservations = $reservationRepository->findBy(['client' => $id], ['id' => 'DESC']);
+    $totalReservations = $reservationRepository->getTotalReservationsByClientId($id);
+    $totalReservationsSales = $reservationRepository->getTotalReservationsSalesByClientId($id);
+    $reservationsInProgress = $reservationRepository->getReservationsInProgressByClientId($id);
 
     return $this->render('clients/view.html.twig', [
       'client' => $client,
+      'clientReservations' => $clientReservations,
+      'totalReservations' => $totalReservations,
+      'totalReservationsSales' => $totalReservationsSales,
+      'reservationsInProgress' => $reservationsInProgress,
     ]);
   }
 

@@ -28,7 +28,7 @@
               <p class="m-2"><span class="label-text">Appartement :</span> {{ reservation.apartment.name }}</p>
               <p class="m-2"><span class="label-text">Nombre de personnes :</span> {{ reservation.nbOfPersons }}</p>
               <p class="m-2"><span class="label-text">Date :</span> Du {{ reservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }} au {{ reservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }}</p>
-              <p class="m-2"><span class="label-text">Tarif :</span> {{ reservation.price }}</p>
+              <p class="m-2"><span class="label-text">Tarif :</span> {{ reservation.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
             </div>
           </div>
         </div>

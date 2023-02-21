@@ -34,15 +34,15 @@
               <div class="d-flex justify-content-around align-items-center">
                 <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
                   <p class="fw-bold mb-2">Total ventes</p>
-                  <p class="h1 mb-0">{# {{ totalSales|format_currency('EUR', {rounding_mode: 'floor'}) }} #}</p>
+                  <p class="h1 mb-0">{{ totalReservationsSales|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
                 </div>
                 <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
                   <p class="fw-bold mb-2">Locations en cours</p>
-                  <p class="h1 mb-0">{# {{ reservationsInProgress }} #}</p>
+                  <p class="h1 mb-0">{{ reservationsInProgress }}</p>
                 </div>
                 <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
-                  <p class="fw-bold mb-2">Nombre de réservations</p>
-                  <p class="h1 mb-0">{# {{ nbReservations }} #}</p>
+                  <p class="fw-bold mb-2">Locations totales</p>
+                  <p class="h1 mb-0">{{ totalReservations }}</p>
                 </div>
               </div>
             </div>
@@ -67,18 +67,18 @@
                 </tr>
               </thead>
               <tbody>
-                {% for res in client.reservations %}
+                {% for clientReservation in clientReservations %}
                   <tr>
-                    <td>{{ res.id }}</td>
-                    <td>{{ res.apartment.name }}</td>
+                    <td>{{ clientReservation.id }}</td>
+                    <td>{{ clientReservation.apartment.name }}</td>
                     <td>
-                      {{ res.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }} <br/>
-                      {{ res.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}
+                      {{ clientReservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }} <br/>
+                      {{ clientReservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}
                     </td>
-                    <td>{{ res.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</td>
-                    <td><span style="padding:0.5rem 1rem; background:{{ res.state.color }}; border-radius:10px; color:white;">{{ res.state.name }}</span></td>
+                    <td>{{ clientReservation.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</td>
+                    <td><span style="padding:0.5rem 1rem; background:{{ clientReservation.state.color }}; border-radius:10px; color:white;">{{ clientReservation.state.name }}</span></td>
                     <td>
-                      <a href="{{ path('app_reservation_view', {'id': res.id}) }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-magnifying-glass-plus"></i></a>
+                      <a href="{{ path('app_reservation_view', {'id': clientReservation.id}) }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-magnifying-glass-plus"></i></a>
                     </td>
                   </tr>
                 {% endfor %}
