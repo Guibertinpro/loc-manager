@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+  <div class="block-title d-flex">
+    {% if app.request.attributes.get('_route') == 'app_client_update' %}
+      <img src="{{ asset('build/images/icon-edit-client.svg') }}" alt="icon add client" class="title-icon">
+      <h1>Modification du client n°{{ app.request.attributes.get('id') }}</h1>
+    {% else %}
+      <img src="{{ asset('build/images/icon-add-client.svg') }}" alt="icon add client" class="title-icon">
+      <h1>Ajout d'un client</h1>
+    {% endif %}
+  </div>
+  <div class="block-content form-block">
+    {{ form_start(form) }}
+      {{ form_widget(form) }}
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

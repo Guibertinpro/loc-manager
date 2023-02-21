@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ApartmentController extends AbstractController
 {
-  #[Route('/apartments/list', name: 'app_apartments_list')]
+  #[Route('/apartments', name: 'app_apartments_list')]
   public function list(ApartmentRepository $apartmentRepository)
   {
     $apartments = $apartmentRepository->findAll();

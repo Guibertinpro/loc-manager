@@ -24,18 +24,6 @@ class Reservation
     #[ORM\JoinColumn(nullable: false)]
     private ?Apartment $apartment = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $clientFirstname = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $clientLastname = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $clientEmail = null;
-
-    #[ORM\Column]
-    private ?string $clientPhone = null;
-
     #[ORM\Column]
     private ?int $nbOfPersons = null;
 
@@ -45,6 +33,10 @@ class Reservation
     #[ORM\ManyToOne(targetEntity: ReservationState::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?ReservationState $state = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Client $client = null;
 
     public function getId(): ?int
     {
@@ -87,54 +79,6 @@ class Reservation
         return $this;
     }
 
-    public function getClientFirstname(): ?string
-    {
-        return $this->clientFirstname;
-    }
-
-    public function setClientFirstname(string $clientFirstname): self
-    {
-        $this->clientFirstname = $clientFirstname;
-
-        return $this;
-    }
-
-    public function getClientLastname(): ?string
-    {
-        return $this->clientLastname;
-    }
-
-    public function setClientLastname(string $clientLastname): self
-    {
-        $this->clientLastname = $clientLastname;
-
-        return $this;
-    }
-
-    public function getClientEmail(): ?string
-    {
-        return $this->clientEmail;
-    }
-    
-    public function setClientEmail(string $clientEmail): self
-    {
-        $this->clientEmail = $clientEmail;
-
-        return $this;
-    }
-
-    public function getClientPhone(): ?string
-    {
-        return $this->clientPhone;
-    }
-
-    public function setClientPhone(string $clientPhone): self
-    {
-        $this->clientPhone = $clientPhone;
-
-        return $this;
-    }
-
     public function getNbOfPersons(): ?int
     {
         return $this->nbOfPersons;
@@ -171,9 +115,15 @@ class Reservation
         return $this;
     }
 
-    public function getFullName(): string
+    public function getClient(): ?Client
     {
-        return $this->clientFirstname . ' ' . $this->clientLastname
-        ;
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
+
+        return $this;
     }
 }

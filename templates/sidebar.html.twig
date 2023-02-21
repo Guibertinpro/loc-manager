@@ -43,6 +43,22 @@
 			</div>
 		</li>
 		<li class="mb-1">
+			<button class="btn btn-toggle align-items-center rounded collapsed link-light sidebar-item position-relative" data-bs-toggle="collapse" data-bs-target="#clients-collapse" aria-expanded="false">
+        <i class="fa-solid fa-building"></i>
+				Clients
+			</button>
+			<div class="collapse" id="clients-collapse" style="">
+				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+					<li>
+						<a href="{{ path('app_clients_list') }}" class="rounded link-light">Tous les clients</a>
+					</li>
+					<li>
+						<a href="{{ path('app_client_new') }}" class="rounded link-light">Ajouter un client</a>
+					</li>
+				</ul>
+			</div>
+		</li>
+		<li class="mb-1">
 			<button class="btn btn-toggle align-items-center rounded collapsed link-light sidebar-item position-relative" data-bs-toggle="collapse" data-bs-target="#reservation-states-collapse" aria-expanded="false">
         <i class="fa-solid fa-gear"></i>
 				Paramètres

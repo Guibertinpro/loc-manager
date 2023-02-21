@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use App\Repository\ClientRepository;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,23 +13,27 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ReservationController extends AbstractController
 {
-  #[Route('/reservations/list', name: 'app_reservations_list')]
-  public function list(ReservationRepository $reservationRepository)
+  #[Route('/reservations', name: 'app_reservations_list')]
+  public function list(ReservationRepository $reservationRepository, ClientRepository $clientRepository)
   {
     $reservations = $reservationRepository->findBy([], ['id' => 'DESC']);
+    $clients = $clientRepository->findAll();
 
     return $this->render('reservations/list.html.twig', [
       'reservations' => $reservations,
+      'clients' => $clients,
     ]);
   }
 
   #[Route('/reservation/view/{id}', name: 'app_reservation_view')]
-  public function view(int $id, ReservationRepository $reservationRepository, EntityManagerInterface $entityManagerInterface)
+  public function view(int $id, ReservationRepository $reservationRepository, ClientRepository $clientRepository)
   {
     $reservation = $reservationRepository->find($id);
+    $client = $clientRepository->find($reservation->getClient()->getId());
 
     return $this->render('reservations/view.html.twig', [
       'reservation' => $reservation,
+      'client' => $client,
     ]);
   }
 

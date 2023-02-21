@@ -11,8 +11,8 @@
         <thead>
           <tr>
             <th scope="col">Numéro</th>
-            <th scope="col">Client</th>
             <th scope="col">Appartement</th>
+            <th scope="col">Client</th>
             <th scope="col">Date</th>
             <th scope="col">Occupants</th>
             <th scope="col">Prix</th>
@@ -24,8 +24,8 @@
           {% for reservation in reservations %}
             <tr>
               <td>{{ reservation.id }}</td>
-              <td>{{ reservation.clientFirstname }} {{ reservation.clientLastname }}</td>
               <td>{{ reservation.apartment.name }}</td>
+              <td>{{ reservation.client.firstname }} {{ reservation.client.lastname }}</td>
               <td>
                 {{ reservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }} <br/>
                 {{ reservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}
