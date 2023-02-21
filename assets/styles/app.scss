@@ -47,28 +47,29 @@ a:hover {
   text-align: center;
 }
 .btn-primary {
-  border: #5fb65c;
+  color: white;
   background: #5fb65c;
+  border: 1px solid #5fb65c;
 }
 .btn-primary:hover {
-  border: #399336;
   background: #399336;
+  border: 1px solid #399336;
 }
-.btn-danger {
-  background: #d63333;
-  border: #d63333;
+.btn-outline-danger {
+  color: #d63333;
+  border: 1px solid #d63333;
 }
-.btn-danger:hover {
+.btn-outline-danger:hover {
   background: #b52323;
-  border: #b52323;
+  border: 1px solid #b52323;
 }
-.btn-warning {
-  background: #e7da1b;
-  border: #e7da1b;
+.btn-outline-warning {
+  color: #e7da1b;
+  border: 1px solid #e7da1b;
 }
-.btn-warning:hover {
+.btn-outline-warning:hover {
   background: #d3c81a;
-  border: #d3c81a;
+  border: 1px solid #d3c81a;
 }
 h1, .h1 {
   font-size: 1.5rem;
@@ -98,9 +99,6 @@ h3, .h3 {
 }
 table td {
   vertical-align: middle;
-}
-.btn-title-icon {
-  font-size: 1.2rem;
 }
 .label-text {
   font-weight: bold;
