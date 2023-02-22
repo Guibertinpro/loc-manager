@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Apartment;
-use App\Entity\Client;
 use App\Entity\Reservation;
 use App\Entity\ReservationState;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -22,11 +21,7 @@ class ReservationType extends AbstractType
     $builder
       ->add('startAt', DateType::class, ['label' => 'Date d\'arrivée'])
       ->add('endAt', DateType::class, ['label' => 'Date de départ'])
-      ->add('client', EntityType::class, [
-          'class' => Client::class,
-          'choice_label' => 'getFullName',
-          'label' => 'Client'
-      ])
+      ->add('client', ClientAutocompleteField::class)
       ->add('nbOfAdults', NumberType::class, ['label' => 'Nombre d\'adultes'])
       ->add('nbOfChildren', NumberType::class, ['label' => 'Nombre d\'enfants'])
       ->add('price', TextType::class, ['label' => 'Prix'])
