@@ -15,6 +15,7 @@ class IndexController extends AbstractController
     $number_of_apartments = $apartmentRepository->getTotalApartments();
     $number_of_reservations = $reservationRepository->getTotalReservations();
     $total_sales = $reservationRepository->getTotalReservationsSales();
+    $apartments = $apartmentRepository->findAll();
 
     // Get all reservations data
     $reservations = $reservationRepository->findAll();
@@ -27,7 +28,7 @@ class IndexController extends AbstractController
         'start' => $reservation->getStartAt()->format('Y-m-d'),
         'end' => $reservation->getEndAt()->format('Y-m-d'),
         'title' => $reservation->getClient()->getFullName(),
-        'backgroundColor' => $reservation->getState()->getColor(),
+        'backgroundColor' => $reservation->getApartment()->getColor(),
         'textColor' => 'white',
         'url' => $reservationController->generateUrl('app_reservation_view', [
           'id' => $reservation->getId(),
@@ -47,6 +48,7 @@ class IndexController extends AbstractController
       'totalSales' => $total_sales,
       'reservations' => $data,
       'reservationsInProgress' => $reservationsInProgress,
+      'apartments' => $apartments,
     ]);
   }
 }

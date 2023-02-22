@@ -20,7 +20,15 @@
           month: 'Mois',
           week: 'Semaine'
         },
-        events: {{ reservations|raw }}
+        events: {{ reservations|raw }},
+        /* eventDidMount: function(info) {
+          var tooltip = new Tooltip(info.el, {
+            title: info.event.extendedProps.description,
+            placement: 'top',
+            trigger: 'hover',
+            container: 'body'
+          });
+        }, */
       });
       calendar.render();
     };
@@ -54,5 +62,15 @@
   </div>
   <div class="block-content calendar-block">
     <div id="calendar"></div>
+    <div class="calendar-legend mt-2">
+      <div class="d-flex justify-content-start align-items-center">
+        {% for apartment in apartments %}
+          <div class="apartment-legend d-flex justify-content-start align-items-center me-4">
+            <p class="apartment-color me-1" style="width: 15px; height:15px; border-radius:50%; background: {{ apartment.color }}"></p>
+            <p class="apartment-name">{{ apartment.name }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
   </div>
 {% endblock %}

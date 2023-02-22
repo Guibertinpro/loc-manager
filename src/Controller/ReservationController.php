@@ -25,7 +25,7 @@ class ReservationController extends AbstractController
     ]);
   }
 
-  #[Route('/reservation/view/{id}', name: 'app_reservation_view')]
+  #[Route('/reservation/view/{id}', name: 'app_reservation_view', requirements: ['id' => '\d+'])]
   public function view(int $id, ReservationRepository $reservationRepository, ClientRepository $clientRepository)
   {
     $reservation = $reservationRepository->find($id);
@@ -73,8 +73,8 @@ class ReservationController extends AbstractController
     return $this->redirectToRoute('app_reservations_list');
   }
 
-  #[Route('/reservation/update/{id}', name: 'app_reservation_update')]
-  public function update(int $id, Request $request, EntityManagerInterface $entityManagerInterface, Reservation $reservation)
+  #[Route('/reservation/update/{id}', name: 'app_reservation_update', requirements: ['id' => '\d+'])]
+  public function update(Request $request, EntityManagerInterface $entityManagerInterface, Reservation $reservation)
   {
     $form = $this->createForm(ReservationType::class, $reservation);
 
