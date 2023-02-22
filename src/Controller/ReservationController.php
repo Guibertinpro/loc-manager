@@ -6,9 +6,13 @@ use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\ClientRepository;
 use App\Repository\ReservationRepository;
+use App\Service\PdfService;
+use App\Service\ContainerParametersHelper;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReservationController extends AbstractController
@@ -25,20 +29,8 @@ class ReservationController extends AbstractController
     ]);
   }
 
-  #[Route('/reservation/view/{id}', name: 'app_reservation_view', requirements: ['id' => '\d+'])]
-  public function view(int $id, ReservationRepository $reservationRepository, ClientRepository $clientRepository)
-  {
-    $reservation = $reservationRepository->find($id);
-    $client = $clientRepository->find($reservation->getClient()->getId());
-
-    return $this->render('reservations/view.html.twig', [
-      'reservation' => $reservation,
-      'client' => $client,
-    ]);
-  }
-
   #[Route('/reservation/new', name: 'app_reservation_new')]
-  public function new(Request $request, EntityManagerInterface $entityManagerInterface)
+  public function new(Request $request, EntityManagerInterface $entityManagerInterface, ContainerParametersHelper $pathHelpers, PdfService $pdfService)
   {
     $reservation = new Reservation();
 
@@ -49,16 +41,35 @@ class ReservationController extends AbstractController
 
         $reservation = $form->getData();
 
+        // Generante fileToken
+        $fileToken = sha1(uniqid(md5(rand()), true));
+        $reservation->setContractFiletoken($fileToken);
+
         $entityManagerInterface->persist($reservation);
         $entityManagerInterface->flush();
 
+        // Save pdf file
+        self::generatePdfContract($reservation, $reservation->getClient(), $reservation->getId(), $pdfService, $pathHelpers);
+
         $this->addFlash('success', 'Réservation créée avec succès!');
 
-        return $this->redirectToRoute('app_reservations_list');
+        return $this->redirectToRoute('app_reservation_view', ['id' => $reservation->getId()]);
     }
 
     return $this->render('reservations/new.html.twig', [
       'form' => $form
+    ]);
+  }
+
+  #[Route('/reservation/view/{id}', name: 'app_reservation_view', requirements: ['id' => '\d+'])]
+  public function view(int $id, ReservationRepository $reservationRepository, ClientRepository $clientRepository)
+  {
+    $reservation = $reservationRepository->find($id);
+    $client = $clientRepository->find($reservation->getClient()->getId());
+
+    return $this->render('reservations/view.html.twig', [
+      'reservation' => $reservation,
+      'client' => $client,
     ]);
   }
 
@@ -93,5 +104,19 @@ class ReservationController extends AbstractController
     return $this->render('reservations/new.html.twig', [
       'form' => $form
     ]);
+  }
+
+  #[Route('reservation/pdf/{id}', name: 'app_reservation_pdf_download', requirements: ['id' => '\d+'])]
+  public function generatePdfContract(int $id, ReservationRepository $reservationRepository, ClientRepository $clientRepository, PdfService $pdfService)
+  {
+    $reservation = $reservationRepository->find($id);
+    $client = $clientRepository->find($reservation->getClient()->getId());
+
+    $data = [
+      'reservation' => $reservation,
+      'client' => $client,
+    ];
+    $html =  $this->renderView('pdf/pdf-layout.html.twig', $data);
+    $pdfService->showPdfFile($html, $reservation->getId());
   }
 }

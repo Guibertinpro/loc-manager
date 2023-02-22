@@ -1,17 +1,11 @@
-{% extends "base.html.twig" %}
-
-{% block body %}
-  <div class="block-title d-flex justify-content-between align-items-center">
-    <h1><i class="fa-solid fa-bed clr-black me-3"></i>Réservation n°{{ reservation.id }}</h1>
-    <a href="{{ path('app_reservation_update', {'id': reservation.id}) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square btn-title-icon me-2"></i>Modifier</a>
-  </div>
-  <div class="block-content">
-    <div class="reservation-links d-flex justify-content-start align-items-center">
-      <a href="{{ path('app_client_view', {'id': client.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-user btn-title-icon me-2"></i>Fiche client</a>
-      <a href="{{ path('app_reservation_pdf_download', {'id': reservation.id}) }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa-solid fa-file-lines btn-title-icon me-2"></i>Contrat de réservation</a>
-    </div>
-  </div>
-  <div class="block-content">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Contrat de la réservation n°{{ reservation.id }}</title>
+</head>
+<body>
+  <div class="block-content" style="margin: 0 auto;">
     <div class="row row-cols-1 row-cols-md-2 g-4">
       <div class="col">
         <div class="card">
@@ -19,7 +13,6 @@
             <h2 class="mb-3">Détail client</h2>
             <div class="card-text block-client-reservation">
               <p class="m-2">{{ client.firstname }} {{ client.lastname }}</p>
-              <p class="m-2"><a class="link" href="mailto:{{ client.email }}">{{ client.email }}</a></p>
               <p class="m-2">{{ client.phone }}</p>
               <p class="m-2">{{ client.address }}</p>
               <p class="m-2">{{ client.complementAddress }}</p>
@@ -46,4 +39,5 @@
       </div>
     </div>
   </div>
-{% endblock %}
+</body>
+</html>

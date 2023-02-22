@@ -41,6 +41,9 @@ class Reservation
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $client = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $contractFileToken = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +141,18 @@ class Reservation
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getContractFileToken(): ?string
+    {
+        return $this->contractFileToken;
+    }
+
+    public function setContractFileToken(string $contractFileToken): self
+    {
+        $this->contractFileToken = $contractFileToken;
 
         return $this;
     }
