@@ -31,6 +31,27 @@ class Apartment
     #[ORM\Column(length: 255)]
     private ?string $color = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $type = null;
+
+    #[ORM\Column(length: 10)]
+    private ?string $capacity = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $surface = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $pets = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $numberOfRooms = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $numberOfBeds = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $localisationDescription = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +125,90 @@ class Apartment
     public function setColor(string $color): self
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getCapacity(): ?string
+    {
+        return $this->capacity;
+    }
+
+    public function setCapacity(string $capacity): self
+    {
+        $this->capacity = $capacity;
+
+        return $this;
+    }
+
+    public function getSurface(): ?string
+    {
+        return $this->surface;
+    }
+
+    public function setSurface(string $surface): self
+    {
+        $this->surface = $surface;
+
+        return $this;
+    }
+
+    public function getPets(): ?string
+    {
+        return $this->pets;
+    }
+
+    public function setPets(string $pets): self
+    {
+        $this->pets = $pets;
+
+        return $this;
+    }
+
+    public function getNumberOfRooms(): ?string
+    {
+        return $this->numberOfRooms;
+    }
+
+    public function setNumberOfRooms(string $numberOfRooms): self
+    {
+        $this->numberOfRooms = $numberOfRooms;
+
+        return $this;
+    }
+
+    public function getNumberOfBeds(): ?string
+    {
+        return $this->numberOfBeds;
+    }
+
+    public function setNumberOfBeds(string $numberOfBeds): self
+    {
+        $this->numberOfBeds = $numberOfBeds;
+
+        return $this;
+    }
+
+    public function getLocalisationDescription(): ?string
+    {
+        return $this->localisationDescription;
+    }
+
+    public function setLocalisationDescription(?string $localisationDescription): self
+    {
+        $this->localisationDescription = $localisationDescription;
 
         return $this;
     }

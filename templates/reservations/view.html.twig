@@ -41,7 +41,7 @@
               <p class="m-2"><span class="label-text">Nombre d'enfants :</span> {{ reservation.nbOfChildren }}</p>
               <p class="m-2"><span class="label-text">Tarif :</span> {{ reservation.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
               <p class="m-2"><span class="label-text">Montant des arrhes :</span> {{ reservation.arrhes|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
-              <p class="m-2"><span class="label-text">Date limite chèque de caution :</span> Du {{ reservation.dateLeftToPay|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }}</p>
+              <p class="m-2"><span class="label-text">Date limite chèque de caution :</span> {{ reservation.dateLeftToPay|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }}</p>
             </div>
           </div>
         </div>

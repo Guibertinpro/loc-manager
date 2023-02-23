@@ -47,7 +47,7 @@
   <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <td colspan="12">
-        <p>Pour faire suite à votre demande, je vous prie de trouver ci-dessous le contrat et les principales informations relatives à l’appartement situé à CAPBRETON.</p>
+        <p>Pour faire suite à votre demande, je vous prie de trouver ci-dessous le contrat et les principales informations relatives à l’appartement situé à {{ reservation.apartment.name }}</p>
         <p>Dans le but de faciliter la communication sur place nous vous remercions si possible de nous confier votre numéro de téléphone portable.</p>
         <p>En espérant avoir le plaisir de vous accueillir très prochainement, je vous adresse mes sincères salutations.</p>
       </td>
@@ -66,10 +66,9 @@
       </td>
       <td colspan="12">
         <h2 class="fw-bold">Location :</h2>
-        <p class="m-0">Maison de l’Océan</p> 
-        <p class="m-0">Impasse de la SAVANE</p>
-        <p class="m-0">APPT 41</p>
-        <p class="m-0">40130 CAPBRETON</p>
+        <p class="m-0">{{ reservation.apartment.address }}</p>
+        <p class="m-0">{{ reservation.apartment.complementAddress }}</p>
+        <p class="m-0">{{ reservation.apartment.postcode }} {{ reservation.apartment.city }}</p>
         <p class="m-0">Séjour évasion</p>
         <p class="m-0">www.sejours-evasion.com</p>
         <p class="m-0">reservation@sejours-evasion.com</p>
@@ -246,7 +245,7 @@
   <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom:1rem;">
     <tr valign="top">
       <td width="50%" style="padding: 0 0.3rem;">
-        <p class="">Fait à Saubrigues le ................................................................</p>
+        <p class="">Fait à Saubrigues le {{ now|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}</p>
       <td width="50%" style="padding: 0 0.3rem;">
         <p class="">Fait à ..........................................................................</p>
       </td>

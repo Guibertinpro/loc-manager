@@ -124,10 +124,13 @@ class ReservationController extends AbstractController
     // Get images
     $iban = $pdfService->imageToBase64($this->getParameter('kernel.project_dir'). '/assets/img/iban-boursorama.jpg');
 
+    $dateNow = new DateTime('now');
+
     $data = [
       'reservation' => $reservation,
       'client' => $client,
       'iban' => $iban,
+      'now' => $dateNow,
     ];
     $html =  $this->renderView('pdf/pdf-layout.html.twig', $data);
     $pdfService->showPdfFile($html, $reservation->getId());

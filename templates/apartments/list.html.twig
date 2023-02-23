@@ -14,8 +14,7 @@
             <h2 class="card-title">{{ apartment.name }}</h2>
             <p class="card-text">{{ apartment.address }}</p>
             <p class="card-text">{{ apartment.complementAddress }}</p>
-            <p class="card-text">{{ apartment.postcode }}</p>
-            <p class="card-text">{{ apartment.city }}</p>
+            <p class="card-text">{{ apartment.postcode }} {{ apartment.city }}</p>
           </div>
           <div class="card-footer d-flex justify-content-around">
             <a href="{{ path('app_apartment_update', {'id': apartment.id}) }}" class="btn btn-sm btn-outline-warning"><i class="fa-solid fa-pen-to-square me-2"></i>Modifier</a>

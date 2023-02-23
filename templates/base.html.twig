@@ -12,7 +12,7 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
   </head>
-  <body>
+  <body {% if ('new' in app.request.requestUri) or ('update' in app.request.requestUri)  %}id="form-page"{% endif %}>
     {% block sidebar %}
         {% include "sidebar.html.twig" %}
     {% endblock %}
@@ -25,3 +25,4 @@
     </div>
   </body>
 </html>
+

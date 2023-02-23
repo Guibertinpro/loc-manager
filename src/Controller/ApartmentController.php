@@ -60,7 +60,7 @@ class ApartmentController extends AbstractController
   }
 
   #[Route('/apartment/update/{id}', name: 'app_apartment_update')]
-  public function update(int $id, Request $request, EntityManagerInterface $entityManagerInterface, Apartment $apartment)
+  public function update(Request $request, EntityManagerInterface $entityManagerInterface, Apartment $apartment)
   {
     $form = $this->createForm(ApartmentType::class, $apartment);
 
