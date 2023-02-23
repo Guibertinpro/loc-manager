@@ -27,4 +27,5 @@ yarn-error.log
 
 ### PDF files ###
 /assets/pdf
+.DS_Store
 ### PDF files ###
