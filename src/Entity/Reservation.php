@@ -41,8 +41,14 @@ class Reservation
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $client = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $contractFileToken = null;
+    #[ORM\Column(length: 50)]
+    private ?string $arrhes = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $leftToPay = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateLeftToPay = null;
 
     public function getId(): ?int
     {
@@ -145,14 +151,38 @@ class Reservation
         return $this;
     }
 
-    public function getContractFileToken(): ?string
+    public function getArrhes(): ?string
     {
-        return $this->contractFileToken;
+        return $this->arrhes;
     }
 
-    public function setContractFileToken(string $contractFileToken): self
+    public function setArrhes(string $arrhes): self
     {
-        $this->contractFileToken = $contractFileToken;
+        $this->arrhes = $arrhes;
+
+        return $this;
+    }
+
+    public function getLeftToPay(): ?string
+    {
+        return $this->leftToPay;
+    }
+
+    public function setLeftToPay(string $leftToPay): self
+    {
+        $this->leftToPay = $leftToPay;
+
+        return $this;
+    }
+
+    public function getDateLeftToPay(): ?\DateTimeInterface
+    {
+        return $this->dateLeftToPay;
+    }
+
+    public function setDateLeftToPay(?\DateTimeInterface $dateLeftToPay): self
+    {
+        $this->dateLeftToPay = $dateLeftToPay;
 
         return $this;
     }

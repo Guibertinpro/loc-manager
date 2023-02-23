@@ -8,12 +8,14 @@ use App\Repository\ClientRepository;
 use App\Repository\ReservationRepository;
 use App\Service\PdfService;
 use App\Service\ContainerParametersHelper;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 class ReservationController extends AbstractController
 {
@@ -30,7 +32,7 @@ class ReservationController extends AbstractController
   }
 
   #[Route('/reservation/new', name: 'app_reservation_new')]
-  public function new(Request $request, EntityManagerInterface $entityManagerInterface, ContainerParametersHelper $pathHelpers, PdfService $pdfService)
+  public function new(Request $request, EntityManagerInterface $entityManagerInterface)
   {
     $reservation = new Reservation();
 
@@ -41,15 +43,17 @@ class ReservationController extends AbstractController
 
         $reservation = $form->getData();
 
-        // Generante fileToken
-        $fileToken = sha1(uniqid(md5(rand()), true));
-        $reservation->setContractFiletoken($fileToken);
+        $dateLeftToPay = $reservation->getStartAt()->modify("-1 month");
+        $reservation->setDateLeftToPay($dateLeftToPay);
+
+        $arrhes = $reservation->getPrice() * 0.3;
+        $reservation->setArrhes($arrhes);
+
+        $leftToPay = $reservation->getPrice() - $arrhes;
+        $reservation->setLeftToPay($leftToPay);
 
         $entityManagerInterface->persist($reservation);
         $entityManagerInterface->flush();
-
-        // Save pdf file
-        self::generatePdfContract($reservation, $reservation->getClient(), $reservation->getId(), $pdfService, $pathHelpers);
 
         $this->addFlash('success', 'Réservation créée avec succès!');
 
@@ -93,6 +97,11 @@ class ReservationController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
         $reservation = $form->getData();
 
+        $dateStart = $reservation->getStartAt();
+        $dateLeftToPay = clone $dateStart;
+        $dateLeftToPay = $dateLeftToPay->modify("-1 month");
+        $reservation->setDateLeftToPay($dateLeftToPay);
+
         $entityManagerInterface->persist($reservation);
         $entityManagerInterface->flush();
 
@@ -112,9 +121,13 @@ class ReservationController extends AbstractController
     $reservation = $reservationRepository->find($id);
     $client = $clientRepository->find($reservation->getClient()->getId());
 
+    // Get images
+    $iban = $pdfService->imageToBase64($this->getParameter('kernel.project_dir'). '/assets/img/iban-boursorama.jpg');
+
     $data = [
       'reservation' => $reservation,
       'client' => $client,
+      'iban' => $iban,
     ];
     $html =  $this->renderView('pdf/pdf-layout.html.twig', $data);
     $pdfService->showPdfFile($html, $reservation->getId());

@@ -3,41 +3,269 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>Contrat de la réservation n°{{ reservation.id }}</title>
+  <style>
+    .page_break{
+      page-break-before: always;
+    }
+    table, th, td {
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+    }
+    h2{
+      font-size:1.2rem;
+      margin-bottom:0.5rem;
+      margin-top:0;
+    }
+    h3{
+      font-size:1rem;
+      margin-bottom:0.5rem;
+      margin-top:0;
+    }
+    .fw-bold {
+      font-weight: bold;
+    }
+    .m-0{
+      margin:0;
+    }
+    #footer { position: fixed; right: 0px; bottom: 5px; text-align: center;border-top: 1px solid black;}
+    #footer .page:after { content: counter(page, decimal); }
+    @page { margin: 10px 30px 10px 50px; }
+  </style>
 </head>
 <body>
-  <div class="block-content" style="margin: 0 auto;">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="mb-3">Détail client</h2>
-            <div class="card-text block-client-reservation">
-              <p class="m-2">{{ client.firstname }} {{ client.lastname }}</p>
-              <p class="m-2">{{ client.phone }}</p>
-              <p class="m-2">{{ client.address }}</p>
-              <p class="m-2">{{ client.complementAddress }}</p>
-              <p class="m-2">{{ client.postcode }}</p>
-              <p class="m-2">{{ client.city }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="mb-3">Détail réservation</h2>
-            <div class="card-text block-details-reservation">
-              <p class="m-2"><span class="label-text">Statut :</span> <span style="background: {{ reservation.state.color }}; border-radius:10px; padding: 0.3rem 0.5rem; color:white;">{{ reservation.state.name }}</span></p>
-              <p class="m-2"><span class="label-text">Appartement :</span> {{ reservation.apartment.name }}</p>
-              <p class="m-2"><span class="label-text">Nombre d'adultes :</span> {{ reservation.nbOfAdults }}</p>
-              <p class="m-2"><span class="label-text">Nombre d'enfants :</span> {{ reservation.nbOfChildren }}</p>
-              <p class="m-2"><span class="label-text">Date :</span> Du {{ reservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }} au {{ reservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }}</p>
-              <p class="m-2"><span class="label-text">Tarif :</span> {{ reservation.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <table style="width: 100%; margin-bottom:1rem;">
+    <tr>
+      <td style="width: 25%; font-size: 1.3rem; font-weight:bold;">
+        Séjours évasion
+      </td>
+      <td style="width: 25%; font-size:0.8rem; text-align: right;">
+        Réf: SE{{ reservation.id }}
+      </td>
+    </tr>
+  </table>
+
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td colspan="12">
+        <p>Pour faire suite à votre demande, je vous prie de trouver ci-dessous le contrat et les principales informations relatives à l’appartement situé à CAPBRETON.</p>
+        <p>Dans le but de faciliter la communication sur place nous vous remercions si possible de nous confier votre numéro de téléphone portable.</p>
+        <p>En espérant avoir le plaisir de vous accueillir très prochainement, je vous adresse mes sincères salutations.</p>
+      </td>
+    </tr>
+  </table>
+
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:1rem;">
+    <tr valign="top">
+      <td colspan="12">
+        <h2 class="fw-bold"> Propriétaire :</h2>
+        <p class="m-0">Mr. et Mme BERTIN Johan</p> 
+        <p class="m-0">104, Lotissement Lou Capuloun</p>
+        <p class="m-0">LA FINCA</p>
+        <p class="m-0">40230 SAUBRIGUES</p>
+        <p class="m-0">Tél. : 06.14.60.53.13 - 07.84.200.422</p>
+      </td>
+      <td colspan="12">
+        <h2 class="fw-bold">Location :</h2>
+        <p class="m-0">Maison de l’Océan</p> 
+        <p class="m-0">Impasse de la SAVANE</p>
+        <p class="m-0">APPT 41</p>
+        <p class="m-0">40130 CAPBRETON</p>
+        <p class="m-0">Séjour évasion</p>
+        <p class="m-0">www.sejours-evasion.com</p>
+        <p class="m-0">reservation@sejours-evasion.com</p>
+      </td>
+    </tr>
+  </table>
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #212529; margin-top:1rem;">
+    <tr>
+      <td colspan="12" style="padding: 1rem 1rem 0 1rem;">
+        <h2 class="fw-bold">DESCRIPTIF :</h2>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="12" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0">Appartement situé au premier étage d’un petit immeuble de la résidence.</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0"><span class="fw-bold">Type de logement :</span> Appartement</p>
+        <p class="m-0"><span class="fw-bold">Capacité d’accueil :</span> 4 personnes</p>
+      </td>
+      <td colspan="6" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0"><span class="fw-bold">Animaux :</span> non souhaités</p>
+        <p class="m-0"><span class="fw-bold">Surface habitable :</span> 24 M2 & balcon vue sur mer et dune</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0">Couloir d’entrée</p>
+        <p class="m-0">Chambre lits superposés</p>
+        <p class="m-0">Salle d’eau avec douche, lavabo, Lave-Linge WC</p>
+        <p class="m-0">Placard avec aspirateur table fer à repasser, balai sceau, produits entretien</p>
+        <p class="m-0">Cuisine équipée (Four Combiné micro-ondes, réfrigérateur, lave-vaisselle)</p>
+      </td>
+      <td colspan="6" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0">Séjour avec coin repas comptoir bar salon canapé T.V.</p>
+        <p class="m-0">Mezzanine avec Chambre lit pour 2 personnes (140, avec oreillers, couvertures et protège matelas)</p>
+        <p class="m-0">Terrasse blacon abritée (avec chaises et table de jardin)</p>
+        <p class="m-0">Piscine Parking privatif</p>
+        <p class="m-0">&nbsp;</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="12" style="padding: 0rem 1rem 1rem 1rem;">
+        <h2 class="fw-bold">SITUATION DE LA LOCATION :</h2>
+        <p class="m-0">Appartement situé à CAPBRETON coté plage SANTOCHA proche CERS dans résidence Maison de l’Océan</p>
+        <p class="m-0">Proche BAYONNE BIARRITZ, Espagne...</p>
+        <p class="m-0">Commerces, restaurants, location vélos, et services à proximité.</p>
+        <p class="m-0">Plage au pieds du bâtiment nombreuses activité</p>
+        <p class="m-0">Surf, piste cyclable, pêche, promenade, port...</p>
+      </td>
+    </tr>
+  </table>
+
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:0;">
+    <tr>
+      <td colspan="12">
+        <img src="{{ iban }}" alt="iban" width="100%" height="auto">
+      </td>
+    </tr>
+  </table>
+  <div id="footer">
+    <p class="page">Page </p>
+  </div> 
+
+  <table class="page_break" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom:1rem;">
+    <tr>
+      <td style="width: 50%; text-align: center; font-size: 1.6rem; font-weight:bold;">
+        Contrat de location
+      </td>
+    </tr>
+  </table>
+
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom:1rem;">
+    <tr valign="Top">
+      <td colspan="6">
+        <h2 class="fw-bold">Entre les propriétaires :</h2>
+        <p class="m-0">Mr. et Mme BERTIN Johan</p> 
+        <p class="m-0">104, Lotissement Lou Capuloun</p>
+        <p class="m-0">40230 SAUBRIGUES</p>
+        <p class="m-0">06.14.60.53.13 - 07.84.200.422</p>
+      </td>
+      <td colspan="6">
+        <h2 class="fw-bold">Et les locataires :</h2>
+        <p class="m-0">{{ client.firstname }} {{ client.lastname }}</p> 
+        <p class="m-0">{{ client.address }}</p>
+        <p class="m-0">{{ client.complementAddress }}</p>
+        <p class="m-0">{{ client.postcode }} {{ client.city }}</p>
+        <p class="m-0">{{ client.phone }}</p>
+        <p class="m-0">{{ client.email }}</p>
+      </td>
+    </tr>
+  </table>
+
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom:1rem;">
+    <tr>
+      <td colspan="12">
+        <h3 class="fw-bold">Logement suivant descriptif joint ci-dessus.</h3>
+        <p class="m-0">{{ reservation.apartment.address }} - {{ reservation.apartment.complementAddress }} - {{ reservation.apartment.postcode }} {{ reservation.apartment.city }}</p>
+        <p class="m-0">Nombre de chambres : 2 - Nombre de lits : 3 - Animaux non admis</p>
+      </td>
+    </tr>
+  </table>
+
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#3e3e3e; color:white; margin-bottom:1rem; text-align:center;">
+    <tr>
+      <td colspan="3">
+        <h3 class="fw-bold m-0">Date de réservation :</h3>
+      </td>
+      <td colspan="9">
+        <p style="font-size: 1.2rem;">Du {{ reservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }} à 16h00 au {{ reservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }} à 10h00</p>
+      </td>
+    </tr>
+  </table>
+
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border:1px solid #212529; margin-bottom:1rem;">
+    <tr>
+      <td colspan="12" style="padding: 1rem 1rem 0 1rem;">
+        <h2 class="fw-bold">MODALITÉS ET PRIX DE LOCATION :</h2>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0">Montant du séjour :</p>
+        <p class="m-0 fw-bold">{{ reservation.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
+      </td>
+      <td colspan="6" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0">Nombre de personnes :</p>
+        <p class="m-0 fw-bold">Adulte(s) : {{ reservation.nbOfAdults }} - Enfant(s) : {{ reservation.nbOfChildren }}</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="12" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0">Le prix de la location est payable en totalité <span class="fw-bold">1 mois avant la période de location par virement</span></p>
+        <p class="m-0">Le montant des <span class="fw-bold">arrhes</span> pour confirmation de la location, est fixé à <span class="fw-bold">30% du montant du loyer prévu.</span></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="12" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0 fw-bold">Ce prix comprend toutes les charges à l’exception du chauffage éventuel et de la taxe de séjour demandée par la commune, suivant tarif en vigueur par adulte et par jour.</p>
+        <p class="m-0">Sur demande en sus si disponibilité : services annexes (location de linges, Ménages..)</p>
+        <p class="m-0">Aucune personne supplémentaire par rapport à la capacité labellisée ne sera admise.</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="12" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0"><span class="fw-bold">Un dépôt de garantie sous forme de chèque (non encaissé) de 500 €</span> est demandé en plus du solde <span class="fw-bold">au plus tard un mois avant</span> et vous sera restitué après inventaire et déduction faite du coût des éventuelles détériorations ou remises en état. Celui-ci est à adresser par courrier</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="12" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0">Nous vous rappelons la nécessité de faire le ménage à la fin de votre séjour, Aussi, nous vous serions reconnaissants de faire le maximum afin de laisser l’appartement propre sous peine de déduire un surcoût ménage de la caution.</p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="12" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0">La réservation prendra effet <span class="fw-bold">à réception du virement des 30 % d’arrhes soit {{ reservation.arrhes|format_currency('EUR', {rounding_mode: 'floor'}) }}</span></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="12" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0">Le solde restant d'un montant de <span class="fw-bold">{{ reservation.leftToPay|format_currency('EUR', {rounding_mode: 'floor'}) }}</span> est à faire parvenir par virement un mois avant vos dates de location soit au plus tard le <span class="fw-bold">{{ reservation.dateLeftToPay|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}</span></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="12" style="padding: 0rem 1rem 1rem 1rem;">
+        <p class="m-0">Un exemplaire du présent contrat doit nous être retourné par mail daté et signé avec la mention « lu et approuvé ».</p>
+      </td>
+    </tr>
+  </table>
+
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom:1rem;">
+    <tr valign="top">
+      <td width="50%" style="padding: 0 0.3rem;">
+        <p class="">Fait à Saubrigues le ................................................................</p>
+      <td width="50%" style="padding: 0 0.3rem;">
+        <p class="">Fait à ..........................................................................</p>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="50%" style="padding: 0 0.3rem;">
+        <p class="">Le Propriétaire</p>
+        <p class="m-0">S.BERTIN</p>
+      </td>
+      <td width="50%" style="padding: 0 0.3rem;">
+        <p class="">J’ai pris connaissance des conditions générales de location et descriptif joint ci-dessus</p> 
+        <p class="">Paraphe Page 1 et signature Page 2</p>
+        <p class="">Signature du locataire</p>
+      </td>
+    </tr>
+  </table>
+  <div id="footer">
+    <p class="page">Page </p>
+  </div> 
+
 </body>
 </html>
