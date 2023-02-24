@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\ClientRepository;
+use App\Repository\ContractFileRepository;
 use App\Repository\ReservationRepository;
 use App\Service\PdfService;
 use App\Service\ContainerParametersHelper;
@@ -66,14 +67,16 @@ class ReservationController extends AbstractController
   }
 
   #[Route('/reservation/view/{id}', name: 'app_reservation_view', requirements: ['id' => '\d+'])]
-  public function view(int $id, ReservationRepository $reservationRepository, ClientRepository $clientRepository)
+  public function view(int $id, ReservationRepository $reservationRepository, ClientRepository $clientRepository, ContractFileRepository $contractFileRepository)
   {
     $reservation = $reservationRepository->find($id);
     $client = $clientRepository->find($reservation->getClient()->getId());
+    $contract = $contractFileRepository->findBy(['reservation' => $id]);
 
     return $this->render('reservations/view.html.twig', [
       'reservation' => $reservation,
       'client' => $client,
+      'contract' => $contract
     ]);
   }
 

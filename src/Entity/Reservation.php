@@ -50,6 +50,9 @@ class Reservation
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateLeftToPay = null;
 
+    #[ORM\OneToOne(mappedBy: 'reservation', cascade: ['persist', 'remove'])]
+    private ?ContractFile $contractFile = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -183,6 +186,28 @@ class Reservation
     public function setDateLeftToPay(?\DateTimeInterface $dateLeftToPay): self
     {
         $this->dateLeftToPay = $dateLeftToPay;
+
+        return $this;
+    }
+
+    public function getContractFile(): ?ContractFile
+    {
+        return $this->contractFile;
+    }
+
+    public function setContractFile(?ContractFile $contractFile): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($contractFile === null && $this->contractFile !== null) {
+            $this->contractFile->setReservation(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($contractFile !== null && $contractFile->getReservation() !== $this) {
+            $contractFile->setReservation($this);
+        }
+
+        $this->contractFile = $contractFile;
 
         return $this;
     }

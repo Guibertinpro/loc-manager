@@ -8,13 +8,21 @@
   <div class="block-content">
     <div class="reservation-links d-flex justify-content-start align-items-center">
       <a href="{{ path('app_client_view', {'id': client.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-user btn-title-icon me-2"></i>Fiche client</a>
-      <a href="{{ path('app_reservation_pdf_download', {'id': reservation.id}) }}" target="_blank" class="btn btn-primary btn-sm"><i class="fa-solid fa-file-lines btn-title-icon me-2"></i>Contrat de réservation</a>
+      <a href="{{ path('app_reservation_pdf_download', {'id': reservation.id}) }}" target="_blank" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-file-lines btn-title-icon me-2"></i>Générer le contrat</a>
+      {% if contract %}
+        {% for cont in contract %}
+          <a href="{{ asset('uploads/contracts/' ~ cont.filename) }}" target="_blank" class="btn btn-primary btn-sm me-3">Voir le contrat</a>
+          <a href="{{ path('app_contract_file_update', {'id': cont.id, 'reservationId': cont.reservation.id}) }}" target="_blank" class="btn btn-primary btn-sm me-3">Modifier le contrat téléchargé</a>
+        {% endfor %}
+      {% else %}
+        <a href="{{ path('app_contract_file_new', {'id': reservation.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-download btn-title-icon me-2"></i></i>Télécharger un contrat signé</a>
+      {% endif %}
     </div>
   </div>
   <div class="block-content">
     <div class="row row-cols-1 row-cols-md-2 g-4">
       <div class="col">
-        <div class="card">
+        <div class="card mb-3">
           <div class="card-body">
             <h2 class="mb-3">Détail client</h2>
             <div class="card-text block-client-reservation">
@@ -30,7 +38,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="card">
+        <div class="card mb-3">
           <div class="card-body">
             <h2 class="mb-3">Détail réservation</h2>
             <div class="card-text block-details-reservation">
@@ -41,7 +49,8 @@
               <p class="m-2"><span class="label-text">Nombre d'enfants :</span> {{ reservation.nbOfChildren }}</p>
               <p class="m-2"><span class="label-text">Tarif :</span> {{ reservation.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
               <p class="m-2"><span class="label-text">Montant des arrhes :</span> {{ reservation.arrhes|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
-              <p class="m-2"><span class="label-text">Date limite chèque de caution :</span> {{ reservation.dateLeftToPay|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }}</p>
+              <p class="m-2"><span class="label-text">Montant du solde restant :</span> {{ reservation.leftToPay|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
+              <p class="m-2"><span class="label-text">Date limite réception du chèque de caution et solde restant :</span> {{ reservation.dateLeftToPay|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }}</p>
             </div>
           </div>
         </div>

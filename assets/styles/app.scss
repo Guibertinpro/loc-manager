@@ -120,3 +120,11 @@ table td {
 .block-content .row +.row {
   margin-top: 0rem;
 }
+button.close {
+  background: none;
+  border: 1px solid;
+  border: none;
+}
+.dropzone-container {
+  border-radius: 10px;
+}
