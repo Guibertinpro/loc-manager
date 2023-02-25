@@ -105,4 +105,19 @@ class ReservationRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
         ;
     }
+
+    public function getTotalSalesByYearAndMonth($year, $month, $apartment = null)
+    {
+        return $this->createQueryBuilder('r')
+            ->select('SUM(r.price)')
+            ->where('YEAR(r.startAt) = :year')
+            ->andWhere('MONTH(r.startAt) = :month')
+            ->andWhere('r.apartment = :apartment')
+            ->setParameter('year', $year)
+            ->setParameter('month', $month)
+            ->setParameter('apartment', $apartment)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 }
