@@ -7,11 +7,8 @@ use App\Repository\ReservationRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Date;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
-
-use function PHPUnit\Framework\objectHasAttribute;
 
 class IndexController extends AbstractController
 {
@@ -31,9 +28,10 @@ class IndexController extends AbstractController
     foreach ($reservations as $reservation) {
       $newReservations[] = [
         'id' => $reservation->getId(),
-        'start' => $reservation->getStartAt()->format('Y-m-d'),
-        'end' => $reservation->getEndAt()->format('Y-m-d'),
+        'start' => $reservation->getStartAt()->format('Y-m-d H:i'),
+        'end' => $reservation->getEndAt()->format('Y-m-d H:i'),
         'title' => $reservation->getClient()->getFullName(),
+        'time' => false,
         'backgroundColor' => $reservation->getApartment()->getColor(),
         'textColor' => 'white',
         'url' => $reservationController->generateUrl('app_reservation_view', [
@@ -63,7 +61,6 @@ class IndexController extends AbstractController
         ];
         $i = $i+1;
       }
-      dump($datasets);
 
     // Create chart
     $chartYear = $chartBuilder->createChart(Chart::TYPE_BAR);

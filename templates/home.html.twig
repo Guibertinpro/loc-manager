@@ -7,6 +7,7 @@
     window.onload = () => {
       let calendarEl = document.getElementById('calendar');
       let calendar = new FullCalendar.Calendar(calendarEl, {
+        displayEventTime: false,
         height: 'auto',
         initialView: 'dayGridMonth',
         locale: 'fr',
@@ -21,14 +22,6 @@
           week: 'Semaine'
         },
         events: {{ reservations|raw }},
-        /* eventDidMount: function(info) {
-          var tooltip = new Tooltip(info.el, {
-            title: info.event.extendedProps.description,
-            placement: 'top',
-            trigger: 'hover',
-            container: 'body'
-          });
-        }, */
       });
       calendar.render();
     };

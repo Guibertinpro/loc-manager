@@ -128,3 +128,12 @@ button.close {
 .dropzone-container {
   border-radius: 10px;
 }
+.dateField {
+  display: flex;
+}
+.dateField .input-group:nth-child(1n+0){
+  margin-right: 1rem;
+}
+.form-select {
+  padding: 0.5rem;
+}

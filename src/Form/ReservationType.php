@@ -7,7 +7,7 @@ use App\Entity\Reservation;
 use App\Entity\ReservationState;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,8 +19,14 @@ class ReservationType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options): void
   {
     $builder
-      ->add('startAt', DateType::class, ['label' => 'Date d\'arrivée'])
-      ->add('endAt', DateType::class, ['label' => 'Date de départ'])
+      ->add('startAt', DateTimeType::class, [
+        'label' => 'Date d\'arrivée',
+        'attr' => ['class' => 'dateField d-block d-md-flex'],
+        ])
+      ->add('endAt', DateTimeType::class, [
+        'label' => 'Date de départ',
+        'attr' => ['class' => 'dateField d-block d-md-flex'],
+        ])
       ->add('client', ClientAutocompleteField::class)
       ->add('nbOfAdults', NumberType::class, ['label' => 'Nombre d\'adultes'])
       ->add('nbOfChildren', NumberType::class, ['label' => 'Nombre d\'enfants'])

@@ -105,6 +105,12 @@ class ReservationController extends AbstractController
         $dateLeftToPay = $dateLeftToPay->modify("-1 month");
         $reservation->setDateLeftToPay($dateLeftToPay);
 
+        $arrhes = $reservation->getPrice() * 0.3;
+        $reservation->setArrhes($arrhes);
+
+        $leftToPay = $reservation->getPrice() - $arrhes;
+        $reservation->setLeftToPay($leftToPay);
+
         $entityManagerInterface->persist($reservation);
         $entityManagerInterface->flush();
 
