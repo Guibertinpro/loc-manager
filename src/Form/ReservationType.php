@@ -7,6 +7,7 @@ use App\Entity\Reservation;
 use App\Entity\ReservationState;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -21,7 +22,9 @@ class ReservationType extends AbstractType
     $builder
       ->add('startAt', DateTimeType::class, [
         'label' => 'Date d\'arrivée',
-        'attr' => ['class' => 'dateField d-block d-md-flex'],
+        'attr' => [
+          'class' => 'dateField d-block d-md-flex',
+          ],
         ])
       ->add('endAt', DateTimeType::class, [
         'label' => 'Date de départ',
@@ -43,6 +46,34 @@ class ReservationType extends AbstractType
       ])
       ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
     ;
+
+    $builder->get('startAt')->addModelTransformer(new CallbackTransformer(
+      function ($value) {
+        if(!$value) {
+          $date = new \DateTime('now');
+          $date = $date->setTime(16, 0);
+          return $date;
+        }
+        return $value;
+      },
+      function ($value) {
+        return $value;
+      }
+    ));
+
+    $builder->get('endAt')->addModelTransformer(new CallbackTransformer(
+      function ($value) {
+        if(!$value) {
+          $date = new \DateTime('now');
+          $date = $date->setTime(10, 0);
+          return $date;
+        }
+        return $value;
+      },
+      function ($value) {
+        return $value;
+      }
+    ));
   }
 
   public function configureOptions(OptionsResolver $resolver): void

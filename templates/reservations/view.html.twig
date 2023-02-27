@@ -11,8 +11,8 @@
       <a href="{{ path('app_reservation_pdf_download', {'id': reservation.id}) }}" target="_blank" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-file-lines btn-title-icon me-2"></i>Générer le contrat</a>
       {% if contract %}
         {% for cont in contract %}
-          <a href="{{ asset('uploads/contracts/' ~ cont.filename) }}" target="_blank" class="btn btn-primary btn-sm me-3">Voir le contrat</a>
-          <a href="{{ path('app_contract_file_update', {'id': cont.id, 'reservationId': cont.reservation.id}) }}" target="_blank" class="btn btn-primary btn-sm me-3">Modifier le contrat téléchargé</a>
+          <a href="{{ asset('uploads/contracts/' ~ cont.filename) }}" target="_blank" class="btn btn-primary btn-sm me-3">Voir le contrat signé</a>
+          <a href="{{ path('app_contract_file_update', {'id': cont.id, 'reservationId': cont.reservation.id}) }}" target="_blank" class="btn btn-primary btn-sm me-3">Modifier le contrat signé</a>
         {% endfor %}
       {% else %}
         <a href="{{ path('app_contract_file_new', {'id': reservation.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-download btn-title-icon me-2"></i></i>Télécharger un contrat signé</a>
