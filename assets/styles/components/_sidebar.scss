@@ -6,6 +6,19 @@
   z-index: 2000;
   background-color: #8e7d3a!important;
 }
+#sidebar-mobile {
+  height: 100%;
+  z-index: 2000;
+  background-color: #8e7d3a!important;
+}
+#sidebar-mobile .btn-close {
+  background: none;
+  opacity: 1;
+}
+#sidebar-mobile .btn-close i {
+  color: white;
+  font-size: 1.5rem;
+}
 #lc-logo {
   width: 2rem;
   margin-right: 1rem;

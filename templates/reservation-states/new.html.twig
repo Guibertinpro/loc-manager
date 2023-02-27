@@ -1,10 +1,18 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-  <div class="block-title d-flex">
-    <img src="{{ asset('build/images/icon-add-reservation.svg') }}" alt="icon add reservation" class="title-icon">
-    <h1>Ajout d'un statut de réservation</h1>
+  {% block title_page %}
+  <div class="block-title d-flex-jcb-aic">
+    {{ parent() }}
+    <div class="d-flex-jcb-aic ps-3 col-11 col-md-12">
+      <h1 class="d-flex align-items-center">
+        <img src="{{ asset('build/images/icon-add-reservation.svg') }}" alt="icon add reservation" class="title-icon d-none d-md-block">
+        <img src="{{ asset('build/images/icon-add-reservation-w.svg') }}" alt="icon add reservation" class="title-icon d-md-none">
+        Ajout d'un statut de réservation
+      </h1>
+    </div>
   </div>
+  {% endblock %}
   <div class="block-content form-block">
     {{ form_start(form) }}
         {{ form_widget(form) }}

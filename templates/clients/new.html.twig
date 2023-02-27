@@ -1,15 +1,26 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-  <div class="block-title d-flex">
+  {% block title_page %}
+  <div class="block-title d-flex-jcb-aic">
+    {{ parent() }}
+    <div class="d-flex-jcb-aic ps-3 col-11 col-md-12">
     {% if app.request.attributes.get('_route') == 'app_client_update' %}
-      <img src="{{ asset('build/images/icon-edit-client.svg') }}" alt="icon add client" class="title-icon">
-      <h1>Modification du client n°{{ app.request.attributes.get('id') }}</h1>
+      
+      <h1 class="d-flex align-items-center">
+        <img src="{{ asset('build/images/icon-edit-client.svg') }}" alt="icon add client" class="title-icon d-none d-md-block">
+        <img src="{{ asset('build/images/icon-edit-client-w.svg') }}" alt="icon add client" class="title-icon d-md-none">
+        Modification du client n°{{ app.request.attributes.get('id') }}</h1>
     {% else %}
-      <img src="{{ asset('build/images/icon-add-client.svg') }}" alt="icon add client" class="title-icon">
-      <h1>Ajout d'un client</h1>
+      
+      <h1 class="d-flex align-items-center">
+        <img src="{{ asset('build/images/icon-add-client.svg') }}" alt="icon add client" class="title-icon d-none d-md-block">
+        <img src="{{ asset('build/images/icon-add-client-w.svg') }}" alt="icon add client" class="title-icon d-md-none">
+        Ajout d'un client</h1>
     {% endif %}
+    </div>
   </div>
+  {% endblock %}
   <div class="block-content form-block">
     {{ form_start(form) }}
       <div class="d-flex justify-content-between align-items-center">

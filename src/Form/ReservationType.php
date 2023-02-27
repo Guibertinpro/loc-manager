@@ -13,6 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ReservationType extends AbstractType
@@ -34,6 +37,8 @@ class ReservationType extends AbstractType
       ->add('nbOfAdults', NumberType::class, ['label' => 'Nombre d\'adultes'])
       ->add('nbOfChildren', NumberType::class, ['label' => 'Nombre d\'enfants'])
       ->add('price', TextType::class, ['label' => 'Prix'])
+      ->add('arrhes', TextType::class, ['label' => 'Arrhes'])
+      ->add('leftToPay', TextType::class, ['label' => 'Solde restant'])
       ->add('apartment', EntityType::class, [
           'class' => Apartment::class,
           'choice_label' => 'name',
@@ -79,7 +84,7 @@ class ReservationType extends AbstractType
   public function configureOptions(OptionsResolver $resolver): void
   {
     $resolver->setDefaults([
-        'data_class' => Reservation::class,
+      'data_class' => Reservation::class,
     ]);
   }
 }

@@ -1,15 +1,28 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-  <div class="block-title d-flex">
-    {% if app.request.attributes.get('_route') == 'app_reservation_update' %}
-      <img src="{{ asset('build/images/icon-edit-reservation.svg') }}" alt="icon add reservation" class="title-icon">
-      <h1>Modification de la réservation n°{{ app.request.attributes.get('id') }}</h1>
-    {% else %}
-      <img src="{{ asset('build/images/icon-add-reservation.svg') }}" alt="icon add reservation" class="title-icon">
-      <h1>Ajout d'une réservation</h1>
-    {% endif %}
+  {% block title_page %}
+  <div class="block-title d-flex-jcb-aic">
+    {{ parent() }}
+    <div class="d-flex-jcb-aic ps-3 col-11 col-md-12">
+      {% if app.request.attributes.get('_route') == 'app_reservation_update' %}
+        
+        <h1 class="d-flex align-items-center">
+          <img src="{{ asset('build/images/icon-edit-reservation.svg') }}" alt="icon add reservation" class="title-icon d-none d-md-block">
+          <img src="{{ asset('build/images/icon-edit-reservation-w.svg') }}" alt="icon add reservation" class="title-icon d-md-none">
+          Modification de la réservation n°{{ app.request.attributes.get('id') }}
+        </h1>
+      {% else %}
+        
+        <h1 class="d-flex align-items-center">
+          <img src="{{ asset('build/images/icon-add-reservation.svg') }}" alt="icon add reservation" class="title-icon d-none d-md-block">
+          <img src="{{ asset('build/images/icon-add-reservation-w.svg') }}" alt="icon add reservation" class="title-icon d-md-none">
+          Ajout d'une réservation
+        </h1>
+      {% endif %}
+    </div>
   </div>
+  {% endblock %}
   <div class="block-content form-block">
     {{ form_start(form) }}
       {{ form_row(form.startAt) }}

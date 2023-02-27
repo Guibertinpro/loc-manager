@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block body %}
+  {% block title_page %}
   <div class="block-title d-flex">
     {% if app.request.attributes.get('_route') == 'app_reservation_update' %}
       <img src="{{ asset('build/images/icon-edit-reservation.svg') }}" alt="icon add reservation" class="title-icon">
@@ -20,6 +21,7 @@
       <h1>Ajout un contrat</h1>
     {% endif %}
   </div>
+  {% endblock %}
   <div class="block-content form-block">
     {{ form_start(form) }}
       {{ form_row(form.filename, {label: false}) }}

@@ -32,31 +32,21 @@
 {% block title %}{{ parent() }} - Tableau de bord{% endblock %}
 
 {% block body %}
-  <div class="block-title">
-    <h1>Tableau de bord</h1>
-  </div>
-  <div class="block-content d-flex justify-content-around align-items-center">
-    <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
-      <p class="fw-bold mb-2">Total ventes</p>
-      <p class="h1 mb-0">{{ totalSales|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
+  {% block title_page %}
+    <div class="block-title d-flex-jcb-aic">
+      {{ parent() }}
+      <div class="d-flex-jcb-aic ps-3 col-11 col-md-12">
+        <h1>Tableau de bord</h1>
+      </div>
     </div>
-    <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
-      <p class="fw-bold mb-2">Locations en cours</p>
-      <p class="h1 mb-0">{{ reservationsInProgress }}</p>
-    </div>
-    <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
-      <p class="fw-bold mb-2">Nombre de réservations</p>
-      <p class="h1 mb-0">{{ nbReservations }}</p>
-    </div>
-    <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
-      <p class="fw-bold mb-2">Nombre d'appartements</p>
-      <p class="h1 mb-0">{{ nbApartments }}</p>
-    </div>
+  {% endblock %}
+  <div class="block-section-title">
+    <h2 class="ms-3"><i class="fa-solid fa-calendar-days me-2"></i>Planning</h2>
   </div>
   <div class="block-content calendar-block">
     <div id="calendar"></div>
     <div class="calendar-legend mt-2">
-      <div class="d-flex justify-content-start align-items-center">
+      <div class="d-flex flex-wrap justify-content-start align-items-center">
         {% for apartment in apartments %}
           <div class="apartment-legend d-flex justify-content-start align-items-center me-4">
             <p class="apartment-color me-1" style="width: 15px; height:15px; border-radius:50%; background: {{ apartment.color }}"></p>
@@ -66,7 +56,30 @@
       </div>
     </div>
   </div>
+  <div class="block-section-title text-left">
+    <h2 class="ms-3"><i class="fa-solid fa-chart-column me-2"></i>Statistiques</h2>
+  </div>
   <div class="block-content">
-    {{ render_chart(chartYear) }}
+    <div class="my-3">
+      <h3>Statistiques globales</h3>
+      <div class="d-flex justify-content-around align-items-center mb-3">
+        <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
+          <p class="fw-bold mb-2">Total ventes</p>
+          <p class="h1 mb-0">{{ totalSales|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
+        </div>
+        <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
+          <p class="fw-bold mb-2">Locations en cours</p>
+          <p class="h1 mb-0">{{ reservationsInProgress }}</p>
+        </div>
+        <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
+          <p class="fw-bold mb-2">Réservations totales</p>
+          <p class="h1 mb-0">{{ nbReservations }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="my-5">
+      <h3>Chiffres de l'année en cours</h3>
+      {{ render_chart(chartYear) }}
+    </div>
   </div>
 {% endblock %}

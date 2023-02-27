@@ -1,10 +1,15 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-  <div class="block-title d-flex justify-content-between align-items-center">
-    <h1><i class="fa-solid fa-bed clr-black me-3"></i>Réservation n°{{ reservation.id }}</h1>
-    <a href="{{ path('app_reservation_update', {'id': reservation.id}) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square btn-title-icon me-2"></i>Modifier</a>
+  {% block title_page %}
+  <div class="block-title d-flex-jcb-aic">
+    {{ parent() }}
+    <div class="d-flex-jcb-aic ps-3 col-11 col-md-12">
+      <h1><i class="fa-solid fa-bed clr-black me-3"></i>Réservation n°{{ reservation.id }}</h1>
+      <a href="{{ path('app_reservation_update', {'id': reservation.id}) }}" class="link-title btn btn-warning"><i class="fa-solid fa-pen-to-square btn-title-icon me-2"></i>Modifier</a>
+    </div>
   </div>
+  {% endblock %}
   <div class="block-content">
     <div class="reservation-links d-flex justify-content-start align-items-center">
       <a href="{{ path('app_client_view', {'id': client.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-user btn-title-icon me-2"></i>Fiche client</a>

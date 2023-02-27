@@ -1,10 +1,15 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-  <div class="block-title d-flex justify-content-between align-items-center">
-    <h1><i class="fa-solid fa-building clr-black me-3"></i>Appartements</h1>
-    <a href="{{ path('app_apartment_new') }}" class="m-0 h3 btn btn-primary d-flex align-items-center"><i class="fa-solid fa-circle-plus me-2"></i>Ajouter</a>
-  </div>
+  {% block title_page %}
+    <div class="block-title d-flex-jcb-aic">
+      {{ parent() }}
+      <div class="d-flex-jcb-aic ps-3 col-11 col-md-12">
+        <h1><i class="fa-solid fa-building clr-black me-3"></i>Appartements</h1>
+        <a href="{{ path('app_apartment_new') }}" class="link-title m-0 h3 btn btn-primary d-flex align-items-center"><i class="fa-solid fa-circle-plus me-2"></i>Ajouter</a>
+      </div>
+    </div>
+  {% endblock %}
   <div class="block-content">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
       {% for apartment in apartments %}

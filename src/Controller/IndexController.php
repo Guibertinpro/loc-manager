@@ -16,7 +16,6 @@ class IndexController extends AbstractController
   public function home(ApartmentRepository $apartmentRepository, ReservationRepository $reservationRepository, ReservationController $reservationController, ChartBuilderInterface $chartBuilder)
   {
     // Get data
-    $number_of_apartments = $apartmentRepository->getTotalApartments();
     $number_of_reservations = $reservationRepository->getTotalReservations();
     $total_sales = $reservationRepository->getTotalReservationsSales();
     $apartments = $apartmentRepository->findAll();
@@ -79,7 +78,6 @@ class IndexController extends AbstractController
     ]);
 
     return $this->render('home.html.twig', [
-      'nbApartments' => $number_of_apartments,
       'nbReservations' => $number_of_reservations,
       'totalSales' => $total_sales,
       'reservations' => $reservationsData,

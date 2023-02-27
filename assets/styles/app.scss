@@ -28,6 +28,20 @@ a:hover {
   color: initial;
   text-decoration: none;
 }
+.d-flex-jcb-aic{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.link-title {
+  font-size: 0.7rem;
+  padding: 0.3rem 0.5rem;
+}
+.menu-bar {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+}
 .clr-white {
   color: $clr-white;
 }
@@ -37,17 +51,32 @@ a:hover {
 }
 .block-content {
   background: white;
-  padding: 1rem 2rem;
+  padding: 1rem 1rem;
   border-radius: $border-radius;
   margin: 1rem;
   box-shadow: 0 0 7px -4px;
 }
 #form-page .block-content {
-  margin: 1rem auto;
+  margin: 1rem;
 }
-.block-title {
-  padding: 1rem 1rem 0 1rem;
+.block-title-mobile {
+  padding: 0.5rem;
   text-align: center;
+  background: #8e7d3a;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.block-title-mobile, .block-title-mobile i {
+  color: white;
+}
+.block-title-mobile .link-title, .block-title-mobile .link-title i {
+  background: white;
+  border: white;
+  color: #8e7d3a;
+}
+.block-section-title {
+  padding: 0.5rem;
 }
 .btn-primary {
   color: white;
@@ -76,16 +105,17 @@ a:hover {
   border: 1px solid #e7a11b;
 }
 h1, .h1 {
-  font-size: 1.5rem;
-  margin: 0;
-}
-h2, .h2 {
   font-size: 1.2rem;
   margin: 0;
 }
-h3, .h3 {
+h2, .h2 {
   font-size: 1rem;
   margin: 0;
+  text-align: left;
+}
+h3, .h3 {
+  font-size: 0.8rem;
+  margin: 1rem 0;
 }
 .block-container-content {
   padding: 1rem;
@@ -99,7 +129,7 @@ h3, .h3 {
 .title-icon {
   width: 30px;
   height: auto;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 table td {
   vertical-align: middle;
@@ -136,4 +166,48 @@ button.close {
 }
 .form-select {
   padding: 0.5rem;
+}
+.fc .fc-button-group>.fc-button {
+  padding: 0.2rem 0.4rem;
+}
+.fc .fc-toolbar-title {
+  font-size: 1rem !important;
+}
+
+@media (min-width: 768px) {
+  .block-content {
+    padding: 1rem 2rem;
+  }
+  .link-title {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+  }
+  .block-title {
+    padding: 1rem 1rem 0 1rem;
+    text-align: center;
+    background: none;
+    position: initial;
+  }
+  #form-page .block-content {
+    margin: 1rem auto;
+  }
+  h1, .h1 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  h2, .h2 {
+    font-size: 1.2rem;
+    margin: 0;
+    text-align: left;
+  }
+  h3, .h3 {
+    font-size: 1rem;
+    margin: 1rem 0;
+  }
+  .fc .fc-button-group > .fc-button {
+    padding: 0.4rem 0.5rem;
+  }
+  .fc .fc-toolbar-title {
+    font-size: 1.5rem;
+  }
 }

@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8">
     <title>{% block title %}Loc Manager{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
     {% block stylesheets %}
       {{ encore_entry_link_tags('app') }}
@@ -17,11 +18,16 @@
   <body {% if ('new' in app.request.requestUri) or ('update' in app.request.requestUri)  %}id="form-page"{% endif %}>
     {% block sidebar %}
       {% include "sidebar.html.twig" %}
+      {% include "sidebar-mobile.html.twig" %}
     {% endblock %}
     <div id="main">
       <div id="content">
         {% block body %}
-          <h1>Test</h1>
+          {% block title_page %}
+            <button class="d-md-none menu-bar col-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMobileMenu" aria-controls="offcanvasMobileMenu">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+          {% endblock %}
         {% endblock %}
       </div>
     </div>

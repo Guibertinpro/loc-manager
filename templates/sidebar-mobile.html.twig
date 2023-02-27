@@ -1,0 +1,82 @@
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMobileMenu" aria-labelledby="offcanvasMobileMenu">
+<nav id="sidebar-mobile" class="flex-shrink-0 bg-dark">
+	<div class="offcanvas-header">
+		<a href="{{ path('app_home') }}" class="d-flex align-items-center text-decoration-none link-light sidebar-item">
+			<img src="{{ asset('build/images/locmanager-logo.svg') }}" alt="logo loc manager" id="lc-logo">
+			<span class="fs-5 fw-semibold">Loc Manager</span>
+		</a>
+		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+	</div>
+	<div class="offcanvas-body">
+		<ul class="list-unstyled ps-0">
+			<li class="mb-1">
+				<a href="{{ path('app_home') }}" class="nav-link active link-light" aria-current="page">
+					<i class="fa-solid fa-chart-line"></i>
+					Tableau de bord
+				</a>
+			</li>
+			<li class="mb-1">
+				<button class="btn btn-toggle align-items-center rounded collapsed link-light sidebar-item position-relative" data-bs-toggle="collapse" data-bs-target="#reservations-collapse" aria-expanded="false">
+					<i class="fa-solid fa-bed"></i>
+					Réservations
+				</button>
+				<div class="collapse" id="reservations-collapse" style="">
+					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+						<li>
+							<a href="{{ path('app_reservations_list') }}" class="rounded link-light">Toutes les réservations</a>
+						</li>
+						<li>
+							<a href="{{ path('app_reservation_new') }}" class="rounded link-light">Ajouter une réservation</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li class="mb-1">
+				<button class="btn btn-toggle align-items-center rounded collapsed link-light sidebar-item position-relative" data-bs-toggle="collapse" data-bs-target="#apartments-collapse" aria-expanded="false">
+					<i class="fa-solid fa-building"></i>
+					Appartements
+				</button>
+				<div class="collapse" id="apartments-collapse" style="">
+					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+						<li>
+							<a href="{{ path('app_apartments_list') }}" class="rounded link-light">Tous les appartements</a>
+						</li>
+						<li>
+							<a href="{{ path('app_apartment_new') }}" class="rounded link-light">Ajouter un appartement</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li class="mb-1">
+				<button class="btn btn-toggle align-items-center rounded collapsed link-light sidebar-item position-relative" data-bs-toggle="collapse" data-bs-target="#clients-collapse" aria-expanded="false">
+					<i class="fa-solid fa-user"></i>
+					Clients
+				</button>
+				<div class="collapse" id="clients-collapse" style="">
+					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+						<li>
+							<a href="{{ path('app_clients_list') }}" class="rounded link-light">Tous les clients</a>
+						</li>
+						<li>
+							<a href="{{ path('app_client_new') }}" class="rounded link-light">Ajouter un client</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li class="mb-1">
+				<button class="btn btn-toggle align-items-center rounded collapsed link-light sidebar-item position-relative" data-bs-toggle="collapse" data-bs-target="#reservation-states-collapse" aria-expanded="false">
+					<i class="fa-solid fa-gear"></i>
+					Paramètres
+				</button>
+				<div class="collapse" id="reservation-states-collapse" style="">
+					<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+						<li>
+							<a href="{{ path('app_reservation_states_list') }}" class="rounded link-light">Statuts de réservation</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</div>
+</nav>
+</div>
