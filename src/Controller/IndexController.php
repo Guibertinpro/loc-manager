@@ -75,6 +75,7 @@ class IndexController extends AbstractController
                 'suggestedMax' => 100,
             ],
         ],
+        'aspectRatio' => 1,
     ]);
 
     return $this->render('home.html.twig', [

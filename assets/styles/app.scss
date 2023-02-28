@@ -127,7 +127,7 @@ h3, .h3 {
   margin: 0 0 0.5rem 0;
 }
 .title-icon {
-  width: 30px;
+  width: 20px;
   height: auto;
   margin-right: 0.5rem;
 }
@@ -173,8 +173,14 @@ button.close {
 .fc .fc-toolbar-title {
   font-size: 1rem !important;
 }
+.fc .fc-scrollgrid-section-header.fc-scrollgrid-section-sticky>* {
+  position: initial;
+}
 
 @media (min-width: 768px) {
+  .title-icon {
+    width: 30px;
+  }
   .block-content {
     padding: 1rem 2rem;
   }

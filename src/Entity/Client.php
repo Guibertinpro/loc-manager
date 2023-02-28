@@ -24,8 +24,11 @@ class Client
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 10)]
     private ?string $phone = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $phoneBis = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $address = null;
@@ -96,6 +99,18 @@ class Client
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getPhoneBis(): ?string
+    {
+        return $this->phoneBis;
+    }
+
+    public function setPhoneBis(string $phoneBis): self
+    {
+        $this->phoneBis = $phoneBis;
 
         return $this;
     }
