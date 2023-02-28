@@ -176,6 +176,9 @@ button.close {
 .fc .fc-scrollgrid-section-header.fc-scrollgrid-section-sticky>* {
   position: initial;
 }
+#chart {
+  min-height: 400px;
+}
 
 @media (min-width: 768px) {
   .title-icon {
