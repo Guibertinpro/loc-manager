@@ -8,6 +8,7 @@ use App\Repository\ContractFileRepository;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +31,7 @@ class ContractFileController extends AbstractController
                 $originalFilename = pathinfo($document->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$document->guessExtension();
+                $newFilename = $safeFilename.'-RES-'.$id.'.'.$document->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
@@ -63,8 +64,6 @@ class ContractFileController extends AbstractController
     #[Route('/contract-file/update/{id}/{reservationId}', name: 'app_contract_file_update', requirements: ['id' => '\d+'])]
     public function update(int $id, int $reservationId,Request $request, EntityManagerInterface $entityManagerInterface, ReservationRepository $reservationRepository, SluggerInterface $slugger, ContractFileRepository $contractFileRepository)
     {
-        
-
         $contractFile = new ContractFile();
         $form = $this->createForm(ContractFileType::class, $contractFile);
         $form->handleRequest($request);
@@ -77,7 +76,7 @@ class ContractFileController extends AbstractController
                 $originalFilename = pathinfo($document->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$document->guessExtension();
+                $newFilename = $safeFilename.'-RES-'.$reservationId.'.'.$document->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
@@ -98,6 +97,8 @@ class ContractFileController extends AbstractController
             $oldContractFile = $contractFileRepository->find($id);
             $entityManagerInterface->remove($oldContractFile);
             $entityManagerInterface->flush();
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getParameter('kernel.project_dir').'/public/uploads/contracts/'.$oldContractFile->getFilename());
 
             $contractFile->setReservation($reservationRepository->find($reservationId));
 

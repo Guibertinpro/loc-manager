@@ -36,7 +36,7 @@
     <div class="block-title d-flex-jcb-aic">
       {{ parent() }}
       <div class="d-flex justify-content-center col-10 col-md-12">
-        <h1>Tableau de bord</h1>
+        <h1 class="w-100">Tableau de bord</h1>
       </div>
     </div>
   {% endblock %}
@@ -68,10 +68,6 @@
           <p class="h1 mb-0">{{ totalSales|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
         </div>
         <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
-          <p class="fw-bold mb-2">Locations en cours</p>
-          <p class="h1 mb-0">{{ reservationsInProgress }}</p>
-        </div>
-        <div class="circle-stat text-center d-flex justify-content-center align-items-center flex-column">
           <p class="fw-bold mb-2">Réservations totales</p>
           <p class="h1 mb-0">{{ nbReservations }}</p>
         </div>
@@ -79,7 +75,9 @@
     </div>
     <div class="my-5">
       <h3>Chiffres de l'année en cours</h3>
-      {{ render_chart(chartYear) }}
+      <div id="chart">
+        {{ render_chart(chartYear) }}
+      </div>
     </div>
   </div>
 {% endblock %}

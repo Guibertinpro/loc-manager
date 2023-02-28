@@ -32,9 +32,27 @@
               <td>
                 <a href="{{ path('app_client_view', {'id': client.id}) }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-magnifying-glass-plus"></i></a>
                 <a href="{{ path('app_client_update', {'id': client.id}) }}" class="btn btn-sm btn-outline-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                <a href="{{ path('app_client_delete', {'id': client.id}) }}" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
+                <a class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalConfirmationDelete{{ client.id }}"><i class="fa-solid fa-trash"></i></a>
               </td>
             </tr>
+            <!-- Modal -->
+            <div class="modal fade" id="modalConfirmationDelete{{ client.id }}" tabindex="-1" aria-labelledby="modalConfirmationDeleteLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <p class="modal-title fs-5 h1" id="exampleModalLabel">Confirmation de suppression</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir supprimer le client n°{{ client.id }}</p>
+                  </div>
+                  <div class="modal-footer d-flex-jcb-aic">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
+                    <a href="{{ path('app_client_delete', {'id': client.id}) }}" class="btn btn-danger">Supprimer</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           {% endfor %}
         </tbody>
       </table>

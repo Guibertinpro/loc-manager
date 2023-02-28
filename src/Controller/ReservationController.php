@@ -8,15 +8,11 @@ use App\Repository\ClientRepository;
 use App\Repository\ContractFileRepository;
 use App\Repository\ReservationRepository;
 use App\Service\PdfService;
-use App\Service\ContainerParametersHelper;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Date;
 
 class ReservationController extends AbstractController
 {
@@ -46,12 +42,6 @@ class ReservationController extends AbstractController
 
         $dateLeftToPay = $reservation->getStartAt()->modify("-1 month");
         $reservation->setDateLeftToPay($dateLeftToPay);
-
-        $arrhes = $reservation->getPrice() * 0.3;
-        $reservation->setArrhes($arrhes);
-
-        $leftToPay = $reservation->getPrice() - $arrhes;
-        $reservation->setLeftToPay($leftToPay);
 
         $entityManagerInterface->persist($reservation);
         $entityManagerInterface->flush();
