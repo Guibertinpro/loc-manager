@@ -18,7 +18,7 @@ class ReservationStateController extends AbstractController
     $reservationStates = $reservationStateRepository->findAll();
 
     return $this->render('reservation-states/list.html.twig', [
-     'reservationStates' => $reservationStates,
+      'reservationStates' => $reservationStates,
     ]);
   }
 

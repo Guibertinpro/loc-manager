@@ -22,6 +22,7 @@
         "symfony/doctrine-messenger": "6.2.*",
         "symfony/dotenv": "6.2.*",
         "symfony/expression-language": "6.2.*",
+        "symfony/filesystem": "6.2.*",
         "symfony/flex": "^2",
         "symfony/form": "6.2.*",
         "symfony/framework-bundle": "6.2.*",
@@ -89,7 +90,8 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "send-instructions" : "@php bin/console app:send-instructions"
     },
     "conflict": {
         "symfony/symfony": "*"
