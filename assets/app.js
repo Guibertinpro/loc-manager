@@ -22,11 +22,20 @@ $(function () {
   const priceField = $("#reservation_price");
   const arrhesField = $("#reservation_arrhes");
   const leftToPayField = $("#reservation_leftToPay");
+  let arrhes = 0;
+  let leftToPay = 0;
   priceField.on('change', () => {
     const price = priceField.val();
-    const arrhes = (price * 0.3);
+    arrhes = (price * 0.3);
     arrhesField.val(arrhes);
-    const leftToPay = (price - arrhes);
+    leftToPay = (price - arrhes);
+    leftToPayField.val(leftToPay);
+  });
+
+  arrhesField.on('change', () => {
+    const price = priceField.val();
+    arrhes = arrhesField.val();
+    leftToPay = (price - arrhes);
     leftToPayField.val(leftToPay);
   });
 });

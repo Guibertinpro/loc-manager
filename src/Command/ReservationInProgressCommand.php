@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Configuration;
 use App\Entity\Reservation;
 use App\Entity\ReservationState;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,7 +40,9 @@ class ReservationInProgressCommand extends Command
     $reservations = $reservationRepository->findAll();
 
     $reservationStateRespository = $em->getRepository(ReservationState::class);
-    $stateOk = $reservationStateRespository->find('11');
+    $configurationRepository = $em->getRepository(Configuration::class);
+    $idConigurationStateReservationInProgress = $configurationRepository->find('2')->getValue();
+    $stateOk = $reservationStateRespository->find($idConigurationStateReservationInProgress);
 
     foreach ($reservations as $reservation) {
       $startAt = $reservation->getStartAt();

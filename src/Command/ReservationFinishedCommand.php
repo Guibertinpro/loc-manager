@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Configuration;
 use App\Entity\Reservation;
 use App\Entity\ReservationState;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,7 +40,9 @@ class ReservationFinishedCommand extends Command
     $reservations = $reservationRepository->findAll();
 
     $reservationStateRespository = $em->getRepository(ReservationState::class);
-    $stateOk = $reservationStateRespository->find('8');
+    $configurationRepository = $em->getRepository(Configuration::class);
+    $idConigurationStateReservationFinished = $configurationRepository->find('3')->getValue();
+    $stateOk = $reservationStateRespository->find($idConigurationStateReservationFinished);
 
     foreach ($reservations as $reservation) {
       $endAt = $reservation->getEndAt();
