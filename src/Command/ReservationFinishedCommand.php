@@ -1,0 +1,66 @@
+<?php
+
+namespace App\Command;
+
+use App\Entity\Reservation;
+use App\Entity\ReservationState;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+#[AsCommand(
+  name: 'app:reservation-finished',
+  description: 'Changement du statut de la réservation à "terminé" quand le jour de départ correspond au jour actuel',
+)]
+class ReservationFinishedCommand extends Command
+{
+  private $entityManager;
+
+  public function __construct(EntityManagerInterface $entityManager)
+  {
+    // 3. Update the value of the private entityManager variable through injection
+    $this->entityManager = $entityManager;
+
+    parent::__construct();
+  }
+
+  protected function configure(): void
+  {
+    
+  }
+
+  protected function execute(InputInterface $input, OutputInterface $output): int
+  {
+    $em = $this->entityManager;
+
+    $reservationRepository = $em->getRepository(Reservation::class);
+    $reservations = $reservationRepository->findAll();
+
+    $reservationStateRespository = $em->getRepository(ReservationState::class);
+    $stateOk = $reservationStateRespository->find('8');
+
+    foreach ($reservations as $reservation) {
+      $endAt = $reservation->getEndAt();
+      $endAtDay = $endAt->format('d');
+      $endAtMonth = $endAt->format('m');
+
+      $now = new \DateTime('now');
+      $nowDay = $now->format('d');
+      $nowMonth = $now->format('m');
+
+      if ($endAtDay == $nowDay && $endAtMonth == $nowMonth) {
+
+        $reservation->setState($stateOk);
+        $em->persist($reservation);
+        $em->flush();
+        $output->write('Réservations '. $reservation->getId() .' terminée');
+      } else {
+        
+      }
+    }
+    
+    return Command::SUCCESS;
+  }
+}
