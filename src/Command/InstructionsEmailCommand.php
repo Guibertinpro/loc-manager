@@ -13,13 +13,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Component\Mime\Part\File;
-
-use function PHPSTORM_META\type;
 
 #[AsCommand(
   name: 'app:instructions-email',
@@ -75,7 +72,7 @@ class InstructionsEmailCommand extends Command
       $dateMonth = $dateSending->format('m');
       $dateYear = $dateSending->format('Y');
 
-      if ($newStartAtDay == $dateDay && $newStartAtMonth == $dateMonth && $newStartAtYear == $dateYear && $stateReservation != $idConfigurationStateReservationCanceled) {
+      if ($newStartAtDay == $dateDay && $newStartAtMonth == $dateMonth && $newStartAtYear == $dateYear && $stateReservation != $idConfigurationStateReservationCanceled && $stateReservation != $idConfigurationStateInstructionsSend) {
 
         $emailAdmin = $configurationRepository->find('1')->getValue();
         $clientEmail = $reservationRepository->find($reservation->getId())->getClient()->getEmail();
