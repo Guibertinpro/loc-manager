@@ -48,22 +48,26 @@ class ReservationInProgressCommand extends Command
       $startAt = $reservation->getStartAt();
       $startAtDay = $startAt->format('d');
       $startAtMonth = $startAt->format('m');
+      $startAtYear = $startAt->format('Y');
 
       $now = new \DateTime('now');
       $nowDay = $now->format('d');
       $nowMonth = $now->format('m');
+      $nowYear = $now->format('Y');
 
-      if ($startAtDay == $nowDay && $startAtMonth == $nowMonth) {
+      if ($startAtDay == $nowDay && $startAtMonth == $nowMonth && $startAtYear == $nowYear) {
 
         $reservation->setState($stateOk);
         $em->persist($reservation);
         $em->flush();
-        $output->write('Réservations '. $reservation->getId() .' en cours');
+        $output->write('Réservation '. $reservation->getId() .' démarrée');
+        return Command::SUCCESS;
       } else {
-        
+        $output->write('Aucune réservation en cours le ' . $nowDay . '/' . $nowMonth . '/' . $nowYear);
+        return Command::FAILURE;
       }
     }
     
-    return Command::SUCCESS;
+    
   }
 }

@@ -22,6 +22,7 @@
       {% else %}
         <a href="{{ path('app_contract_file_new', {'id': reservation.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-download btn-title-icon me-2"></i></i>Télécharger un contrat signé</a>
       {% endif %}
+      <a href="{{ path('app_reservation_test_mail', {'id': reservation.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-download btn-title-icon me-2"></i></i>Test mail</a>
     </div>
   </div>
   <div class="block-content">

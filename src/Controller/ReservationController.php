@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\ClientRepository;
+use App\Repository\ConfigurationRepository;
 use App\Repository\ContractFileRepository;
 use App\Repository\ReservationRepository;
 use App\Service\PdfService;
@@ -12,6 +13,12 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Part\DataPart;
+use Symfony\Component\Mime\Part\File;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReservationController extends AbstractController
@@ -127,5 +134,37 @@ class ReservationController extends AbstractController
     ];
     $html =  $this->renderView('pdf/pdf-layout.html.twig', $data);
     $pdfService->showPdfFile($html, $reservation->getId());
+  }
+
+  #[Route('reservation/{id}/test-mail', name: 'app_reservation_test_mail', requirements: ['id' => '\d+'])]
+  public function testMail(int $id, ReservationRepository $reservationRepository, MailerInterface $mailer, ConfigurationRepository $configurationRepository): Response
+  {
+    $emailAdmin = $configurationRepository->find('1')->getValue();
+    $clientEmail = $reservationRepository->find($id)->getClient()->getEmail();
+    $apartment = strtolower($reservationRepository->find($id)->getApartment()->getName());
+    
+    $file = 'consignes-' . $apartment . '.pdf';
+    $filePath = $this->getParameter('kernel.project_dir'). '/public/uploads/instructions/' . $file;
+
+    dump($emailAdmin);
+    dump($clientEmail);
+
+    $email = (new Email())
+      ->from($emailAdmin)
+      ->to($clientEmail)
+      ->subject('Test Email!')
+      ->text('Sending emails test!')
+      ->addPart(new DataPart(new File($filePath), 'Consignes du séjour'))
+      ->html('<p>Sending email test!</p>');
+
+    try {
+      //code...
+      $mailer->send($email);
+    } catch (TransportExceptionInterface $e) {
+      echo $e->getMessage();
+    }
+
+    return $this->redirectToRoute('app_reservation_view', ['id' => $id]);
+
   }
 }
