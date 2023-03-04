@@ -16,10 +16,12 @@
         <thead>
           <tr>
             <th scope="col">Numéro</th>
-            <th scope="col">Appartement</th>
+            <th scope="col">Appt</th>
             <th scope="col">Client</th>
             <th scope="col">Date</th>
             <th scope="col">Prix</th>
+            <th scope="col">Contrat</th>
+            <th scope="col">Paiements</th>
             <th scope="col">Statut</th>
             <th scope="col">Action</th>
           </tr>
@@ -29,12 +31,19 @@
             <tr>
               <td>{{ reservation.id }}</td>
               <td>{{ reservation.apartment.name }}</td>
-              <td>{{ reservation.client.firstname }} {{ reservation.client.lastname }}</td>
+              <td>{{ reservation.client.firstname|first }}.{{ reservation.client.lastname }}</td>
               <td>
                 {{ reservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }} <br/>
                 {{ reservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}
               </td>
               <td>{{ reservation.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</td>
+              <td>{% if reservation.getContractFile != null %}<span style="background-color: #42c66a; padding:0.2rem 0.5rem; color:white; border-radius:10px;">Contrat signé</span>{% else %}<span style="background-color: #c24f19; padding:0.2rem 0.5rem; color:white; border-radius:10px;">Pas de contrat</span>{% endif %}
+              </td>
+              <td style="line-height: 1.6rem;">
+                {% if reservation.cautionValidated == 1 %}<span style="background-color: #42c66a; padding:0.2rem 0.5rem; color:white; border-radius:10px;">Caution</span>{% else %}<span style="background-color: #c24f19; padding:0.2rem 0.5rem; color:white; border-radius:10px;">Caution</span>{% endif %}<br/>
+                {% if reservation.arrhesValidated == 1 %}<span style="background-color: #42c66a; padding:0.2rem 0.5rem; color:white; border-radius:10px;">Arrhes</span>{% else %}<span style="background-color: #c24f19; padding:0.2rem 0.5rem; color:white; border-radius:10px;">Arrhes</span>{% endif %}<br/>
+                {% if reservation.soldeValidated == 1 %}<span style="background-color: #42c66a; padding:0.2rem 0.5rem; color:white; border-radius:10px;">Solde</span>{% else %}<span style="background-color: #c24f19; padding:0.2rem 0.5rem; color:white; border-radius:10px;">Solde</span>{% endif %}
+              </td>
               <td><span style="padding:0.5rem 1rem; background:{{ reservation.state.color }}; border-radius:10px; color:white;">{{ reservation.state.name }}</span></td>
               <td>
                 <a href="{{ path('app_reservation_view', {'id': reservation.id}) }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-magnifying-glass-plus"></i></a>

@@ -50,8 +50,17 @@ class Reservation
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateLeftToPay = null;
 
-    #[ORM\OneToOne(mappedBy: 'reservation', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'reservation')]
     private ?ContractFile $contractFile = null;
+
+    #[ORM\Column]
+    private ?bool $cautionValidated = false;
+
+    #[ORM\Column]
+    private ?bool $arrhesValidated = false;
+
+    #[ORM\Column]
+    private ?bool $soldeValidated = false;
 
     public function getId(): ?int
     {
@@ -208,6 +217,42 @@ class Reservation
         }
 
         $this->contractFile = $contractFile;
+
+        return $this;
+    }
+
+    public function isCautionValidated(): ?bool
+    {
+        return $this->cautionValidated;
+    }
+
+    public function setCautionValidated(bool $cautionValidated): self
+    {
+        $this->cautionValidated = $cautionValidated;
+
+        return $this;
+    }
+
+    public function isArrhesValidated(): ?bool
+    {
+        return $this->arrhesValidated;
+    }
+
+    public function setArrhesValidated(bool $arrhesValidated): self
+    {
+        $this->arrhesValidated = $arrhesValidated;
+
+        return $this;
+    }
+
+    public function isSoldeValidated(): ?bool
+    {
+        return $this->soldeValidated;
+    }
+
+    public function setSoldeValidated(bool $soldeValidated): self
+    {
+        $this->soldeValidated = $soldeValidated;
 
         return $this;
     }

@@ -8,6 +8,7 @@ import 'fullcalendar';
 const $ = require('jquery');
 
 $(function () {
+
   if ($(document).width() >= 768) {
     const sidebarWidth = $("#sidebar").outerWidth();
     $("#content").css("padding-left", sidebarWidth);
@@ -32,10 +33,35 @@ $(function () {
     leftToPayField.val(leftToPay);
   });
 
+  // Calculate the solde field value when arrhes value change.
   arrhesField.on('change', () => {
     const price = priceField.val();
     arrhes = arrhesField.val();
     leftToPay = (price - arrhes);
     leftToPayField.val(leftToPay);
   });
+
+  // Ajax request for validation payments in reservation
+  const inputsPayment = document.querySelectorAll('.validate-payment');
+
+  inputsPayment.forEach(payment => {
+    payment.addEventListener('change', () => {
+      let value = payment.checked;
+      console.log(value);
+      console.log(payment.name);
+      let url = payment.getAttribute("data-path")
+      console.log(url);
+      
+      $.ajax({ 
+        type: 'POST', 
+        url: url,
+        data: {'paymentName' : payment.name, 'paymentValue' : value}, 
+        dataType: 'json',
+        success: function (data) { 
+            console.log(data);
+        }
+      });
+    });
+  });
+
 });

@@ -5,20 +5,14 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\ClientRepository;
-use App\Repository\ConfigurationRepository;
 use App\Repository\ContractFileRepository;
 use App\Repository\ReservationRepository;
 use App\Service\PdfService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Mime\Part\DataPart;
-use Symfony\Component\Mime\Part\File;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReservationController extends AbstractController
@@ -45,17 +39,21 @@ class ReservationController extends AbstractController
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
 
-        $reservation = $form->getData();
+      $reservation = $form->getData();
 
-        $dateLeftToPay = $reservation->getStartAt()->modify("-1 month");
-        $reservation->setDateLeftToPay($dateLeftToPay);
+      $dateLeftToPay = $reservation->getStartAt()->modify("-1 month");
+      $reservation->setDateLeftToPay($dateLeftToPay);
 
-        $entityManagerInterface->persist($reservation);
-        $entityManagerInterface->flush();
+      $reservation->setCautionValidated(false);
+      $reservation->setArrhesValidated(false);
+      $reservation->setSoldeValidated(false);
 
-        $this->addFlash('success', 'Réservation créée avec succès!');
+      $entityManagerInterface->persist($reservation);
+      $entityManagerInterface->flush();
 
-        return $this->redirectToRoute('app_reservation_view', ['id' => $reservation->getId()]);
+      $this->addFlash('success', 'Réservation créée avec succès!');
+
+      return $this->redirectToRoute('app_reservation_view', ['id' => $reservation->getId()]);
     }
 
     return $this->render('reservations/new.html.twig', [
@@ -95,19 +93,23 @@ class ReservationController extends AbstractController
 
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
-        $reservation = $form->getData();
+      $reservation = $form->getData();
 
-        $dateStart = $reservation->getStartAt();
-        $dateLeftToPay = clone $dateStart;
-        $dateLeftToPay = $dateLeftToPay->modify("-1 month");
-        $reservation->setDateLeftToPay($dateLeftToPay);
+      $dateStart = $reservation->getStartAt();
+      $dateLeftToPay = clone $dateStart;
+      $dateLeftToPay = $dateLeftToPay->modify("-1 month");
+      $reservation->setDateLeftToPay($dateLeftToPay);
 
-        $entityManagerInterface->persist($reservation);
-        $entityManagerInterface->flush();
+      $reservation->setCautionValidated(true);
+      $reservation->setArrhesValidated(false);
+      $reservation->setSoldeValidated(false);
 
-        $this->addFlash('success', 'Réservation mise à jour avec succès!');
+      $entityManagerInterface->persist($reservation);
+      $entityManagerInterface->flush();
 
-        return $this->redirectToRoute('app_reservations_list');
+      $this->addFlash('success', 'Réservation mise à jour avec succès!');
+
+      return $this->redirectToRoute('app_reservations_list');
     }
 
     return $this->render('reservations/new.html.twig', [
@@ -136,35 +138,27 @@ class ReservationController extends AbstractController
     $pdfService->showPdfFile($html, $reservation->getId());
   }
 
-  #[Route('reservation/{id}/test-mail', name: 'app_reservation_test_mail', requirements: ['id' => '\d+'])]
-  public function testMail(int $id, ReservationRepository $reservationRepository, MailerInterface $mailer, ConfigurationRepository $configurationRepository): Response
+  #[Route('reservation/validate-payment/{id}', name: 'app_ajax_validate_payment_type', requirements: ['id' => '\d+'])]
+  public function ajaxValidatePaymentType(Request $request, int $id, ReservationRepository $reservationRepository)
   {
-    $emailAdmin = $configurationRepository->find('1')->getValue();
-    $clientEmail = $reservationRepository->find($id)->getClient()->getEmail();
-    $apartment = strtolower($reservationRepository->find($id)->getApartment()->getName());
-    
-    $file = 'consignes-' . $apartment . '.pdf';
-    $filePath = $this->getParameter('kernel.project_dir'). '/public/uploads/instructions/' . $file;
+    $reservation = $reservationRepository->find($id);
 
-    dump($emailAdmin);
-    dump($clientEmail);
+    $paymentName = $request->get('paymentName');
+    $paymentSetMethod = 'set'.ucfirst($paymentName).'Validated';
+    $newPaymentValue = $request->get('paymentValue');
 
-    $email = (new Email())
-      ->from($emailAdmin)
-      ->to($clientEmail)
-      ->subject('Test Email!')
-      ->text('Sending emails test!')
-      ->addPart(new DataPart(new File($filePath), 'Consignes du séjour'))
-      ->html('<p>Sending email test!</p>');
-
-    try {
-      //code...
-      $mailer->send($email);
-    } catch (TransportExceptionInterface $e) {
-      echo $e->getMessage();
+    if ($newPaymentValue === 'false') {
+      $newPaymentValue = 0;
+    } else {
+      $newPaymentValue = 1;
     }
 
-    return $this->redirectToRoute('app_reservation_view', ['id' => $id]);
+    $reservation->$paymentSetMethod($newPaymentValue);
 
+    $reservationRepository->save($reservation, true);
+
+    $data = [$paymentSetMethod, $newPaymentValue];
+
+    return new JsonResponse($data);
   }
 }
