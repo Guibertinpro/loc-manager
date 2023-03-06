@@ -81,12 +81,34 @@ class InstructionsEmailCommand extends Command
         $file = 'consignes-' . $apartment . '.pdf';
         $filePath = $this->projectDir . '/public/uploads/instructions/' . $file;
 
+        // Get the good template
+        $template = null;
+        $template = null;
+        switch ($apartment) {
+          case 'capbreton':
+            $template = 'emails/capbreton.html.twig';
+            break;
+          case 'carnac':
+            $template = 'emails/carnac.html.twig';
+            break;
+          case 'valmorel':
+            $template = 'emails/valmorel.html.twig';
+            break;
+          case 'moliets':
+            $template = 'emails/moliets.html.twig';
+            break;
+          
+          default:
+            $template = 'emails/base.html.twig';
+            break;
+        }
+
         $email = (new TemplatedEmail())
           ->from(new Address($emailAdmin, 'Séjour evasion'))
           ->to($clientEmail)
           ->subject('Votre séjour à ' . $reservation->getApartment()->getName() . ' démarre bientôt')
           ->addPart(new DataPart(new File($filePath), 'Consignes du séjour'))
-          ->htmlTemplate('emails/base.html.twig')
+          ->htmlTemplate($template)
           ->context([
             'reservation' => $reservation,
           ]);

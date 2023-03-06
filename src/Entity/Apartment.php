@@ -52,6 +52,15 @@ class Apartment
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $localisationDescription = null;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $firstCode = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $secondCode = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $thirdCode = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -209,6 +218,42 @@ class Apartment
     public function setLocalisationDescription(?string $localisationDescription): self
     {
         $this->localisationDescription = $localisationDescription;
+
+        return $this;
+    }
+
+    public function getFirstCode(): ?string
+    {
+        return $this->firstCode;
+    }
+
+    public function setFirstCode(?string $firstCode): self
+    {
+        $this->firstCode = $firstCode;
+
+        return $this;
+    }
+
+    public function getSecondCode(): ?string
+    {
+        return $this->secondCode;
+    }
+
+    public function setSecondCode(?string $secondCode): self
+    {
+        $this->secondCode = $secondCode;
+
+        return $this;
+    }
+
+    public function getThirdCode(): ?string
+    {
+        return $this->thirdCode;
+    }
+
+    public function setThirdCode(?string $thirdCode): self
+    {
+        $this->thirdCode = $thirdCode;
 
         return $this;
     }

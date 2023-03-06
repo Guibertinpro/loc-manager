@@ -42,6 +42,9 @@ class ApartmentType extends AbstractType
                 ])
             ->add('numberOfRooms', TextType::class, ['label' => 'Nombre de chambres'])
             ->add('numberOfBeds', TextType::class, ['label' => 'Nombre de lits'])
+            ->add('firstCode', TextType::class, ['label' => 'Code 1', 'required' => false])
+            ->add('secondCode', TextType::class, ['label' => 'Code 2', 'required' => false])
+            ->add('thirdCode', TextType::class, ['label' => 'Code 3', 'required' => false])
             ->add('color', ColorType::class, ['label' => 'Couleur'])
             ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
         ;

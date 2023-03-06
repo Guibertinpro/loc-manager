@@ -1,0 +1,33 @@
+{% apply inky_to_html|inline_css(source('@styles/emails/email.css')) %}
+  <row class="header">
+    <columns>
+      <spacer size="16"></spacer>
+      <h2>Votre séjour approche {{ reservation.client.firstname|capitalize }} !</h2>
+    </columns>
+  </row>
+  <row>
+    <columns>
+      <p>Plus qu'une semaine avant le début de votre séjour.</p>
+      <p>Pour que tout se passe pour le mieux, merci de prendre connaissance des consignes ci-jointes à respecter.</p>
+    </columns>
+  </row>
+  <row>
+    <columns>
+      <p>Voici les différents codes d'accès nécessaires :</p>
+      <p>Code portillon : {{ reservation.apartment.firstCode }}. (Portillon situé rue de la savane)</p>
+      <p>Code verrou : {{ reservation.apartment.secondCode }}</p>
+      <p>Code poignée : {{ reservation.apartment.thirdCode }}</p>
+    </columns>
+  </row>
+  <row>
+    <columns>
+      <spacer size="16"></spacer>
+      <p>Nous vous souhaitons un agréable séjour à {{ reservation.apartment.name|capitalize }}</p>
+    </columns>
+  </row>
+  <row class="header">
+    <columns>
+      <img src="{{ email.image('@img/logo-sejours-evasion.png') }}" class="logo" alt="Logo séjour évasion">
+    </columns>
+  </row>
+{% endapply %}
