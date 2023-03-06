@@ -177,8 +177,11 @@ class ReservationController extends AbstractController
     $idStateContractSend = $conf->find('7')->getValue();
     $stateContractSend = $reservationStateRepository->find($idStateContractSend);
 
+
     // Get images
     $iban = $pdfService->imageToBase64($this->getParameter('kernel.project_dir'). '/assets/img/iban-boursorama.jpg');
+    $logo = $pdfService->imageToBase64($this->getParameter('kernel.project_dir'). '/assets/img/logo-sejours-evasion.png');
+    $logoApartment = $pdfService->imageToBase64($this->getParameter('kernel.project_dir'). '/assets/img/' . str_replace(" ", "", $apartment) . '.jpeg');
 
     $dateNow = new DateTime('now');
 
@@ -186,31 +189,33 @@ class ReservationController extends AbstractController
       'reservation' => $reservation,
       'client' => $client,
       'iban' => $iban,
+      'logo' => $logo,
       'now' => $dateNow,
+      'logoApartment' => $logoApartment,
     ];
 
     // Get the good template
-    $template = null;
+    $pdfTemplate = null;
     switch ($apartment) {
       case 'capbreton':
-        $template = 'pdf/capbreton.html.twig';
+        $pdfTemplate = 'pdf/capbreton.html.twig';
         break;
       case 'carnac':
-        $template = 'pdf/carnac.html.twig';
+        $pdfTemplate = 'pdf/carnac.html.twig';
         break;
       case 'valmorel':
-        $template = 'pdf/valmorel.html.twig';
+        $pdfTemplate = 'pdf/valmorel.html.twig';
         break;
       case 'moliets':
-        $template = 'pdf/moliets.html.twig';
+        $pdfTemplate = 'pdf/moliets.html.twig';
         break;
       
       default:
-        $template = 'pdf/pdf-layout.html.twig';
+        $pdfTemplate = 'pdf/pdf-layout.html.twig';
         break;
     }
 
-    $html =  $this->renderView($template, $data);
+    $html =  $this->renderView($pdfTemplate, $data);
     $pdfService->generateAndSavePdfContract($html, $id);
 
     // Get the pdf file
