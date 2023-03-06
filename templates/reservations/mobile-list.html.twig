@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+  {% block title_page %}
+  <div class="block-title d-flex-jcb-aic">
+    {{ parent() }}
+    <div class="d-flex-jcb-aic col-10 col-md-12">
+      <h1><i class="fa-solid fa-bed clr-black me-3"></i>Réservations</h1>
+      <a href="{{ path('app_reservation_new') }}" class="link-title m-0 h3 btn btn-primary d-flex align-items-center"><i class="fa-solid fa-circle-plus me-2"></i>Ajouter</a>
+    </div>
+  </div>
+  {% endblock %}
+  <div class="block-content-mobile">
+    <div class="">
+      {% for reservation in reservations %}
+        <div class="card-mobile card p-0 my-4">
+          <div class="card-header d-flex-jcb-aic">
+            <p>N°{{ reservation.id }}</p>
+            <p><span style="padding:0.5rem 1rem; background:{{ reservation.state.color }}; border-radius:10px; color:white;">{{ reservation.state.name }}</span></p>
+          </div>
+          <div class="card-body p-2">
+            <p class="fw-bold">{{ reservation.client.firstname|first }}.{{ reservation.client.lastname }}</p>
+            <p>Du {{ reservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }} au {{ reservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY") }}</p>
+            <p></p>
+            <p class="d-flex-jcb-aic">
+            {% if reservation.getContractFile != null %}<span style="background-color: #42c66a; padding:0.2rem 0.5rem; color:white; border-radius:10px; margin-right:0.4rem;">Contrat signé</span>{% else %}<span style="background-color: #c24f19; padding:0.2rem 0.5rem; color:white; border-radius:10px; margin-right:0.4rem;">Pas de contrat</span>{% endif %}
+            {% if reservation.cautionValidated == 1 %}<span style="background-color: #42c66a; padding:0.2rem 0.5rem; color:white; border-radius:10px; margin-right:0.4rem;">Caution</span>{% else %}<span style="background-color: #c24f19; padding:0.2rem 0.5rem; color:white; border-radius:10px; margin-right:0.4rem;">Caution</span>{% endif %}
+            {% if reservation.arrhesValidated == 1 %}<span style="background-color: #42c66a; padding:0.2rem 0.5rem; color:white; border-radius:10px; margin-right:0.4rem;">Arrhes</span>{% else %}<span style="background-color: #c24f19; padding:0.2rem 0.5rem; color:white; border-radius:10px; margin-right:0.4rem;">Arrhes</span>{% endif %}
+            {% if reservation.soldeValidated == 1 %}<span style="background-color: #42c66a; padding:0.2rem 0.5rem; color:white; border-radius:10px; margin-right:0.4rem;">Solde</span>{% else %}<span style="background-color: #c24f19; padding:0.2rem 0.5rem; color:white; border-radius:10px;">Solde</span>{% endif %}</p>
+          </div>
+          <div class="card-footer d-flex-jcb-aic">
+            <a href="{{ path('app_reservation_view', {'id': reservation.id}) }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-magnifying-glass-plus"></i></a>
+            <a href="{{ path('app_reservation_update', {'id': reservation.id}) }}" class="btn btn-sm btn-outline-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+            <a href="{{ path('app_reservation_delete', {'id': reservation.id}) }}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalConfirmationDelete{{ reservation.id }}"><i class="fa-solid fa-trash"></i></a>
+          </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modalConfirmationDelete{{ reservation.id }}" tabindex="-1" aria-labelledby="modalConfirmationDeleteLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <p class="modal-title fs-5 h1" id="exampleModalLabel">Confirmation de suppression</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer la réservation n°{{ reservation.id }}</p>
+              </div>
+              <div class="modal-footer d-flex-jcb-aic">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
+                <a href="{{ path('app_reservation_delete', {'id': reservation.id}) }}" class="btn btn-danger">Supprimer</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

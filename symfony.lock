@@ -334,6 +334,9 @@
             "ref": "0c643e17b5340747b35c2c75e11727fa31bfa9bb"
         }
     },
+    "tattali/mobile-detect-bundle": {
+        "version": "v2.2.6"
+    },
     "twig/extra-bundle": {
         "version": "v3.5.1"
     }

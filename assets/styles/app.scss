@@ -199,6 +199,15 @@ input.validate-payment {
   padding: 4px;
   display: flex;
 }
+.card p {
+  margin: 0 0 0.2rem 0;
+}
+.block-content-mobile {
+  margin: 0.7rem;
+}
+.card-mobile {
+  box-shadow: 0 0 10px -6px;
+}
 
 @media (min-width: 768px) {
   .title-icon {

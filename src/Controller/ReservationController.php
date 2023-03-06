@@ -12,9 +12,9 @@ use App\Repository\ReservationStateRepository;
 use App\Service\PdfService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use MobileDetectBundle\DeviceDetector\MobileDetectorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -27,12 +27,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReservationController extends AbstractController
 {
   #[Route('/reservations', name: 'app_reservations_list')]
-  public function list(ReservationRepository $reservationRepository, ClientRepository $clientRepository)
+  public function list(ReservationRepository $reservationRepository, ClientRepository $clientRepository, MobileDetectorInterface $mobileDetector)
   {
     $reservations = $reservationRepository->findBy([], ['id' => 'DESC']);
     $clients = $clientRepository->findAll();
 
-    return $this->render('reservations/list.html.twig', [
+    if($mobileDetector->isMobile()) {
+      $template = 'reservations/mobile-list.html.twig';
+    } else {
+      $template = 'reservations/list.html.twig';
+    }
+
+    return $this->render($template, [
       'reservations' => $reservations,
       'clients' => $clients,
     ]);
@@ -71,13 +77,19 @@ class ReservationController extends AbstractController
   }
 
   #[Route('/reservation/view/{id}', name: 'app_reservation_view', requirements: ['id' => '\d+'])]
-  public function view(int $id, ReservationRepository $reservationRepository, ClientRepository $clientRepository, ContractFileRepository $contractFileRepository)
+  public function view(int $id, ReservationRepository $reservationRepository, ClientRepository $clientRepository, ContractFileRepository $contractFileRepository, MobileDetectorInterface $mobileDetector)
   {
     $reservation = $reservationRepository->find($id);
     $client = $clientRepository->find($reservation->getClient()->getId());
     $contract = $contractFileRepository->findBy(['reservation' => $id]);
 
-    return $this->render('reservations/view.html.twig', [
+    if($mobileDetector->isMobile()) {
+      $template = 'reservations/mobile-view.html.twig';
+    } else {
+      $template = 'reservations/view.html.twig';
+    }
+
+    return $this->render($template, [
       'reservation' => $reservation,
       'client' => $client,
       'contract' => $contract

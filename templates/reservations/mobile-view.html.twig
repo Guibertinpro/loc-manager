@@ -1,0 +1,86 @@
+{% extends "base.html.twig" %}
+
+{# {% block javascripts %}
+  <script src="{{ asset('validate-payment.js') }}"></script>
+{% endblock %} #}
+
+{% block body %}
+  {% block title_page %}
+  <div class="block-title d-flex-jcb-aic">
+    {{ parent() }}
+    <div class="d-flex-jcb-aic col-10 col-md-12">
+      <h1><i class="fa-solid fa-bed clr-black me-3"></i>Réservation n°{{ reservation.id }}</h1>
+      <a href="{{ path('app_reservation_update', {'id': reservation.id}) }}" class="link-title m-0 h3 btn btn-warning d-flex align-items-center"><i class="fa-solid fa-pen-to-square btn-title-icon me-2"></i>Modifier</a>
+    </div>
+  </div>
+  {% endblock %}
+  <div class="block-content">
+    <div class="reservation-links d-flex justify-content-start align-items-center">
+      <a href="{{ path('app_reservation_pdf_download', {'id': reservation.id}) }}" target="_blank" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-file-lines btn-title-icon me-2"></i>Voir le contrat de réservation</a>
+      <a href="{{ path('app_reservation_send_contract', {'id': reservation.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-paper-plane btn-title-icon me-2"></i>Envoyer le contrat par mail</a>
+      {% if contract %}
+        {% for cont in contract %}
+          <a href="{{ asset('uploads/contracts/' ~ cont.filename) }}" target="_blank" class="btn btn-primary btn-sm me-3"><i class="fa-regular fa-eye btn-title-icon me-2"></i>Voir le contrat signé</a>
+          <a href="{{ path('app_contract_file_update', {'id': cont.id, 'reservationId': cont.reservation.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-pen-to-square btn-title-icon me-2"></i>Modifier le contrat signé</a>
+        {% endfor %}
+      {% else %}
+        <a href="{{ path('app_contract_file_new', {'id': reservation.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-download btn-title-icon me-2"></i></i>Télécharger un contrat signé</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="block-content">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      <div class="col">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex-jcb-aic mb-3">
+              <h2>Détail client</h2>
+              <a href="{{ path('app_client_view', {'id': client.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-user btn-title-icon me-2"></i>Fiche client</a>
+            </div>
+            <div class="card-text block-client-reservation">
+              <p class="m-2">{{ client.firstname }} {{ client.lastname }}</p>
+              <p class="m-2"><a class="link" href="mailto:{{ client.email }}">{{ client.email }}</a></p>
+              <p class="m-2">{{ client.phone }}</p>
+              <p class="m-2">{{ client.address }}</p>
+              <p class="m-2">{{ client.complementAddress }}</p>
+              <p class="m-2">{{ client.postcode }}</p>
+              <p class="m-2">{{ client.city }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="mb-3">Détail réservation</h2>
+            <div class="card-text block-details-reservation">
+              <p class="m-2"><span class="label-text">Statut :</span> <span style="background: {{ reservation.state.color }}; border-radius:10px; padding: 0.3rem 0.5rem; color:white;">{{ reservation.state.name }}</span></p>
+              <div id="container-validate-payment" class="d-flex-jcs-aic">
+                <div class="form-check form-switch me-2">
+                  <label class="form-check-label label-form-switch" for="validate-payment-caution">Caution payée</label>
+                  <input type="checkbox" role="switch" name="caution" id="validate-payment-caution" class="form-check-input validate-payment" {% if reservation.isCautionValidated %}checked{% else %}{% endif %} data-path="{{ path('app_ajax_validate_payment_type', {'id': reservation.id }) }}">
+                </div>
+                <div class="form-check form-switch me-2">
+                  <label class="form-check-label label-form-switch" for="validate-payment-arrhes">Arrhes payées</label>
+                  <input type="checkbox" role="switch" name="arrhes" id="validate-payment-arrhes" class="form-check-input validate-payment" {% if reservation.isArrhesValidated %}checked{% else %}{% endif %} data-path="{{ path('app_ajax_validate_payment_type', {'id': reservation.id }) }}">
+                </div>
+                <div class="form-check form-switch">
+                  <label class="form-check-label label-form-switch" for="validate-payment-solde">Solde payé</label>
+                  <input type="checkbox" role="switch" name="solde" id="validate-payment-solde" class="form-check-input validate-payment" {% if reservation.isSoldeValidated %}checked{% else %}{% endif %} data-path="{{ path('app_ajax_validate_payment_type', {'id': reservation.id }) }}">
+                </div>
+              </div>
+              <p class="m-2"><span class="label-text">Date du séjour :</span> Du {{ reservation.startAt|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }} au {{ reservation.endAt|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }}</p>
+              <p class="m-2"><span class="label-text">Appartement :</span> {{ reservation.apartment.name }}</p>
+              <p class="m-2"><span class="label-text">Nombre d'adultes :</span> {{ reservation.nbOfAdults }}</p>
+              <p class="m-2"><span class="label-text">Nombre d'enfants :</span> {{ reservation.nbOfChildren }}</p>
+              <p class="m-2"><span class="label-text">Tarif :</span> {{ reservation.price|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
+              <p class="m-2"><span class="label-text">Montant des arrhes :</span> {{ reservation.arrhes|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
+              <p class="m-2"><span class="label-text">Montant du solde restant :</span> {{ reservation.leftToPay|format_currency('EUR', {rounding_mode: 'floor'}) }}</p>
+              <p class="m-2"><span class="label-text">Date limite réception du chèque de caution et solde restant :</span> {{ reservation.dateLeftToPay|format_datetime(locale='fr',pattern="dd MMMM YYYY")  }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
