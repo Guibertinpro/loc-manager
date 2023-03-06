@@ -10,7 +10,7 @@
     {{ parent() }}
     <div class="d-flex-jcb-aic col-10 col-md-12">
       <h1><i class="fa-solid fa-bed clr-black me-3"></i>Réservation n°{{ reservation.id }}</h1>
-      <a href="{{ path('app_reservation_update', {'id': reservation.id}) }}" class="link-title btn btn-warning"><i class="fa-solid fa-pen-to-square btn-title-icon me-2"></i>Modifier</a>
+      <a href="{{ path('app_reservation_update', {'id': reservation.id}) }}" class="link-title m-0 h3 btn btn-warning d-flex align-items-center"><i class="fa-solid fa-pen-to-square btn-title-icon me-2"></i>Modifier</a>
     </div>
   </div>
   {% endblock %}
@@ -55,16 +55,16 @@
             <div class="card-text block-details-reservation">
               <p class="m-2"><span class="label-text">Statut :</span> <span style="background: {{ reservation.state.color }}; border-radius:10px; padding: 0.3rem 0.5rem; color:white;">{{ reservation.state.name }}</span></p>
               <div id="container-validate-payment" class="d-flex-jcs-aic">
-                <div class="form-check form-switch me-3">
-                  <label class="form-check-label" for="validate-payment-caution">Caution payée</label>
+                <div class="form-check form-switch me-2">
+                  <label class="form-check-label label-form-switch" for="validate-payment-caution">Caution payée</label>
                   <input type="checkbox" role="switch" name="caution" id="validate-payment-caution" class="form-check-input validate-payment" {% if reservation.isCautionValidated %}checked{% else %}{% endif %} data-path="{{ path('app_ajax_validate_payment_type', {'id': reservation.id }) }}">
                 </div>
-                <div class="form-check form-switch me-3">
-                  <label class="form-check-label" for="validate-payment-arrhes">Arrhes payées</label>
+                <div class="form-check form-switch me-2">
+                  <label class="form-check-label label-form-switch" for="validate-payment-arrhes">Arrhes payées</label>
                   <input type="checkbox" role="switch" name="arrhes" id="validate-payment-arrhes" class="form-check-input validate-payment" {% if reservation.isArrhesValidated %}checked{% else %}{% endif %} data-path="{{ path('app_ajax_validate_payment_type', {'id': reservation.id }) }}">
                 </div>
                 <div class="form-check form-switch">
-                  <label class="form-check-label" for="validate-payment-solde">Solde payé</label>
+                  <label class="form-check-label label-form-switch" for="validate-payment-solde">Solde payé</label>
                   <input type="checkbox" role="switch" name="solde" id="validate-payment-solde" class="form-check-input validate-payment" {% if reservation.isSoldeValidated %}checked{% else %}{% endif %} data-path="{{ path('app_ajax_validate_payment_type', {'id': reservation.id }) }}">
                 </div>
               </div>

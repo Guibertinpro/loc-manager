@@ -184,6 +184,21 @@ button.close {
 #chart {
   min-height: 400px;
 }
+.form-switch {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 0;
+}
+input.validate-payment {
+  height: 1.4rem;
+  width: 2.5rem !important;
+  margin-left: 0 !important;
+}
+.label-form-switch {
+  padding: 4px;
+  display: flex;
+}
 
 @media (min-width: 768px) {
   .title-icon {
