@@ -52,13 +52,15 @@ class InstructionsEmailCommand extends Command
 
     $reservationStateRespository = $em->getRepository(ReservationState::class);
     $configurationRepository = $em->getRepository(Configuration::class);
-    $idConfigurationStateReservationCanceled = $configurationRepository->find('4')->getValue();
     $idConfigurationStateInstructionsSend = $configurationRepository->find('5')->getValue();
+    $idConfigurationStateCompleteFolder = $configurationRepository->find('6')->getValue();
     $stateInstructionsSend = $reservationStateRespository->find($idConfigurationStateInstructionsSend);
 
     $configurationRepository = $em->getRepository(Configuration::class);
 
     foreach ($reservations as $reservation) {
+
+      // Get the date 7 days before reservate start
       $startAt = $reservation->getStartAt();
       $newStartAt = $startAt->modify('-7 days');
       $newStartAtDay = $newStartAt->format('d');
@@ -67,12 +69,18 @@ class InstructionsEmailCommand extends Command
 
       $stateReservation = $reservation->getState()->getId();
 
+      // Get date now
       $dateSending = new DateTime('now');
       $dateDay = $dateSending->format('d');
       $dateMonth = $dateSending->format('m');
       $dateYear = $dateSending->format('Y');
 
-      if ($newStartAtDay == $dateDay && $newStartAtMonth == $dateMonth && $newStartAtYear == $dateYear && $stateReservation != $idConfigurationStateReservationCanceled && $stateReservation != $idConfigurationStateInstructionsSend) {
+      // Compare dates and verify if reservation foler is complete
+      if ($newStartAtDay == $dateDay &&
+          $newStartAtMonth == $dateMonth &&
+          $newStartAtYear == $dateYear &&
+          $stateReservation == $idConfigurationStateCompleteFolder
+          ) {
 
         $emailAdmin = $configurationRepository->find('1')->getValue();
         $clientEmail = $reservationRepository->find($reservation->getId())->getClient()->getEmail();

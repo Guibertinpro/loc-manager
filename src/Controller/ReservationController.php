@@ -100,10 +100,6 @@ class ReservationController extends AbstractController
       $dateLeftToPay = $dateLeftToPay->modify("-1 month");
       $reservation->setDateLeftToPay($dateLeftToPay);
 
-      $reservation->setCautionValidated(true);
-      $reservation->setArrhesValidated(false);
-      $reservation->setSoldeValidated(false);
-
       $entityManagerInterface->persist($reservation);
       $entityManagerInterface->flush();
 
