@@ -50,11 +50,11 @@ class InstructionsEmailCommand extends Command
     $reservationRepository = $em->getRepository(Reservation::class);
     $reservations = $reservationRepository->findAll();
 
-    $reservationStateRespository = $em->getRepository(ReservationState::class);
+    $reservationStateRepository = $em->getRepository(ReservationState::class);
     $configurationRepository = $em->getRepository(Configuration::class);
     $idConfigurationStateInstructionsSend = $configurationRepository->find('5')->getValue();
     $idConfigurationStateCompleteFolder = $configurationRepository->find('6')->getValue();
-    $stateInstructionsSend = $reservationStateRespository->find($idConfigurationStateInstructionsSend);
+    $stateInstructionsSend = $reservationStateRepository->find($idConfigurationStateInstructionsSend);
 
     $configurationRepository = $em->getRepository(Configuration::class);
 
@@ -91,30 +91,29 @@ class InstructionsEmailCommand extends Command
 
         // Get the good template
         $template = null;
-        $template = null;
         switch ($apartment) {
           case 'capbreton':
-            $template = 'emails/capbreton.html.twig';
+            $template = 'emails/send-instructions/capbreton.html.twig';
             break;
           case 'carnac':
-            $template = 'emails/carnac.html.twig';
+            $template = 'emails/send-instructions/carnac.html.twig';
             break;
           case 'valmorel':
-            $template = 'emails/valmorel.html.twig';
+            $template = 'emails/send-instructions/valmorel.html.twig';
             break;
           case 'moliets':
-            $template = 'emails/moliets.html.twig';
+            $template = 'emails/send-instructions/moliets.html.twig';
             break;
           
           default:
-            $template = 'emails/base.html.twig';
+            $template = 'emails/send-instructions/base.html.twig';
             break;
         }
 
         $email = (new TemplatedEmail())
-          ->from(new Address($emailAdmin, 'Séjour evasion'))
+          ->from(new Address($emailAdmin, 'Séjours evasion'))
           ->to($clientEmail)
-          ->subject('Votre séjour à ' . $reservation->getApartment()->getName() . ' démarre bientôt')
+          ->subject('Votre séjour à ' . ucfirst($reservation->getApartment()->getName()) . ' démarre bientôt')
           ->addPart(new DataPart(new File($filePath), 'Consignes du séjour'))
           ->htmlTemplate($template)
           ->context([

@@ -1,0 +1,26 @@
+{% apply inky_to_html|inline_css(source('@styles/emails/email.css')) %}
+  <row class="header">
+    <columns>
+      <spacer size="16"></spacer>
+      <h2>Voici votre contrat de réservation.</h2>
+    </columns>
+  </row>
+  <row>
+    <columns>
+      <p>Vous avez réservé un séjour dans notre gîte de {{ reservation.apartment.name|capitalize }}</p>
+      <p>Vous trouverez en pièce jointe le contrat à nous retourner signé et paraphé.</p>
+      <p>Celui-ci comporte toutes les informations concernant la location ainsi que les modalités de réservation.</p>
+    </columns>
+  </row>
+  <row>
+    <columns>
+      <spacer size="16"></spacer>
+      <p>Nous vous remercions pour votre confiance.</p>
+    </columns>
+  </row>
+  <row class="header">
+    <columns>
+      {# <img src="{{ email.image('@img/logo-sejours-evasion.png') }}" class="logo" alt="Logo séjour évasion"> #}
+    </columns>
+  </row>
+{% endapply %}

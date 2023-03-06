@@ -90,39 +90,18 @@
     <tr>
       <td colspan="6" style="padding: 0rem 1rem 1rem 1rem;">
         <p class="m-0"><span class="fw-bold">Type de logement :</span> Appartement</p>
-        <p class="m-0"><span class="fw-bold">Capacité d’accueil :</span> 4 personnes</p>
+        <p class="m-0"><span class="fw-bold">Capacité d’accueil :</span> {{ reservation.apartment.capacity }} personnes</p>
       </td>
       <td colspan="6" style="padding: 0rem 1rem 1rem 1rem;">
-        <p class="m-0"><span class="fw-bold">Animaux :</span> non souhaités</p>
-        <p class="m-0"><span class="fw-bold">Surface habitable :</span> 24 M2 & balcon vue sur mer et dune</p>
+        <p class="m-0"><span class="fw-bold">Animaux autorisés :</span> {{ reservation.apartment.pets }}</p>
+        {% block surface %}
+          <p class="m-0"><span class="fw-bold">Surface habitable :</span> {{ reservation.apartment.surface }} M2</p>
+        {% endblock %}
       </td>
     </tr>
-    <tr>
-      <td colspan="6" style="padding: 0rem 1rem 1rem 1rem;">
-        <p class="m-0">Couloir d’entrée</p>
-        <p class="m-0">Chambre lits superposés</p>
-        <p class="m-0">Salle d’eau avec douche, lavabo, Lave-Linge WC</p>
-        <p class="m-0">Placard avec aspirateur table fer à repasser, balai sceau, produits entretien</p>
-        <p class="m-0">Cuisine équipée (Four Combiné micro-ondes, réfrigérateur, lave-vaisselle)</p>
-      </td>
-      <td colspan="6" style="padding: 0rem 1rem 1rem 1rem;">
-        <p class="m-0">Séjour avec coin repas comptoir bar salon canapé T.V.</p>
-        <p class="m-0">Mezzanine avec Chambre lit pour 2 personnes (140, avec oreillers, couvertures et protège matelas)</p>
-        <p class="m-0">Terrasse blacon abritée (avec chaises et table de jardin)</p>
-        <p class="m-0">Piscine Parking privatif</p>
-        <p class="m-0">&nbsp;</p>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="12" style="padding: 0rem 1rem 1rem 1rem;">
-        <h2 class="fw-bold">SITUATION DE LA LOCATION :</h2>
-        <p class="m-0">Appartement situé à CAPBRETON coté plage SANTOCHA proche CERS dans résidence Maison de l’Océan</p>
-        <p class="m-0">Proche BAYONNE BIARRITZ, Espagne...</p>
-        <p class="m-0">Commerces, restaurants, location vélos, et services à proximité.</p>
-        <p class="m-0">Plage au pieds du bâtiment nombreuses activité</p>
-        <p class="m-0">Surf, piste cyclable, pêche, promenade, port...</p>
-      </td>
-    </tr>
+    {% block details %}
+      
+    {% endblock %}
   </table>
 
   <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:0;">
@@ -155,12 +134,12 @@
       </td>
       <td colspan="6">
         <h2 class="fw-bold">Et les locataires :</h2>
-        <p class="m-0">{{ client.firstname }} {{ client.lastname }}</p> 
-        <p class="m-0">{{ client.address }}</p>
-        <p class="m-0">{{ client.complementAddress }}</p>
-        <p class="m-0">{{ client.postcode }} {{ client.city }}</p>
-        <p class="m-0">{{ client.phone }}</p>
-        <p class="m-0">{{ client.email }}</p>
+        <p class="m-0">{{ reservation.client.firstname }} {{ reservation.client.lastname }}</p> 
+        <p class="m-0">{{ reservation.client.address }}</p>
+        <p class="m-0">{{ reservation.client.complementAddress }}</p>
+        <p class="m-0">{{ reservation.client.postcode }} {{ reservation.client.city }}</p>
+        <p class="m-0">{{ reservation.client.phone }}</p>
+        <p class="m-0">{{ reservation.client.email }}</p>
       </td>
     </tr>
   </table>
@@ -170,7 +149,7 @@
       <td colspan="12">
         <h3 class="fw-bold">Logement suivant descriptif joint ci-dessus.</h3>
         <p class="m-0">{{ reservation.apartment.address }} - {{ reservation.apartment.complementAddress }} - {{ reservation.apartment.postcode }} {{ reservation.apartment.city }}</p>
-        <p class="m-0">Nombre de chambres : 2 - Nombre de lits : 3 - Animaux non admis</p>
+        <p class="m-0">Nombre de chambres : {{ reservation.apartment.numberOfRooms }} - Nombre de lits : {{ reservation.apartment.numberOfBeds}} - Animaux non admis</p>
       </td>
     </tr>
   </table>

@@ -5,14 +5,23 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\ClientRepository;
+use App\Repository\ConfigurationRepository;
 use App\Repository\ContractFileRepository;
 use App\Repository\ReservationRepository;
+use App\Repository\ReservationStateRepository;
 use App\Service\PdfService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Part\DataPart;
+use Symfony\Component\Mime\Part\File;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReservationController extends AbstractController
@@ -117,6 +126,7 @@ class ReservationController extends AbstractController
   public function generatePdfContract(int $id, ReservationRepository $reservationRepository, ClientRepository $clientRepository, PdfService $pdfService)
   {
     $reservation = $reservationRepository->find($id);
+    $apartment = strtolower($reservation->getApartment()->getName());
     $client = $clientRepository->find($reservation->getClient()->getId());
 
     // Get images
@@ -130,8 +140,107 @@ class ReservationController extends AbstractController
       'iban' => $iban,
       'now' => $dateNow,
     ];
-    $html =  $this->renderView('pdf/pdf-layout.html.twig', $data);
+
+    // Get the good template
+    $template = null;
+    switch ($apartment) {
+      case 'capbreton':
+        $template = 'pdf/capbreton.html.twig';
+        break;
+      case 'carnac':
+        $template = 'pdf/carnac.html.twig';
+        break;
+      case 'valmorel':
+        $template = 'pdf/valmorel.html.twig';
+        break;
+      case 'moliets':
+        $template = 'pdf/moliets.html.twig';
+        break;
+      
+      default:
+        $template = 'pdf/pdf-layout.html.twig';
+        break;
+    }
+
+    $html =  $this->renderView($template, $data);
     $pdfService->showPdfFile($html, $reservation->getId());
+  }
+
+  #[Route('reservation/send-contract/{id}', name: 'app_reservation_send_contract', requirements: ['id' => '\d+'])]
+  public function sendContract(int $id, ReservationRepository $reservationRepository, PdfService $pdfService, MailerInterface $mailer, EntityManagerInterface $em, ConfigurationRepository $conf, ReservationStateRepository $reservationStateRepository)
+  {
+    $reservation = $reservationRepository->find($id);
+    $apartment = strtolower($reservation->getApartment()->getName());
+    $client = $reservation->getClient()->getId();
+    $clientEmail = $reservation->getClient()->getEmail();
+    $emailAdmin = $conf->find('1')->getValue();
+    $idStateContractSend = $conf->find('7')->getValue();
+    $stateContractSend = $reservationStateRepository->find($idStateContractSend);
+
+    // Get images
+    $iban = $pdfService->imageToBase64($this->getParameter('kernel.project_dir'). '/assets/img/iban-boursorama.jpg');
+
+    $dateNow = new DateTime('now');
+
+    $data = [
+      'reservation' => $reservation,
+      'client' => $client,
+      'iban' => $iban,
+      'now' => $dateNow,
+    ];
+
+    // Get the good template
+    $template = null;
+    switch ($apartment) {
+      case 'capbreton':
+        $template = 'pdf/capbreton.html.twig';
+        break;
+      case 'carnac':
+        $template = 'pdf/carnac.html.twig';
+        break;
+      case 'valmorel':
+        $template = 'pdf/valmorel.html.twig';
+        break;
+      case 'moliets':
+        $template = 'pdf/moliets.html.twig';
+        break;
+      
+      default:
+        $template = 'pdf/pdf-layout.html.twig';
+        break;
+    }
+
+    $html =  $this->renderView($template, $data);
+    $pdfService->generateAndSavePdfContract($html, $id);
+
+    // Get the pdf file
+    $contractPDF = $pdfService->getPdfContract($id);
+
+    $templateEmail = 'emails/send-contract/base.html.twig';
+    $email = (new TemplatedEmail())
+      ->from(new Address($emailAdmin, 'Séjour evasion'))
+      ->to($clientEmail)
+      ->cc(new Address($emailAdmin, 'Séjour evasion'))
+      ->subject('Votre demande de séjour à ' . $reservation->getApartment()->getName())
+      ->addPart(new DataPart(new File($contractPDF), 'Contrat de réservation n°' . $id, 'application/pdf'))
+      ->htmlTemplate($templateEmail)
+      ->context([
+        'reservation' => $reservation,
+      ]);
+
+    try {
+      $mailer->send($email);
+      $reservation->setState($stateContractSend);
+      $em->persist($reservation);
+      $em->flush();
+
+      $pdfService->removePdfContract($id);
+
+      return $this->redirectToRoute('app_reservation_view', ['id' => $id]);
+
+    } catch (TransportExceptionInterface $e) {
+      echo $e->getMessage();
+    }
   }
 
   #[Route('reservation/validate-payment/{id}', name: 'app_ajax_validate_payment_type', requirements: ['id' => '\d+'])]

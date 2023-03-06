@@ -16,11 +16,12 @@
   {% endblock %}
   <div class="block-content">
     <div class="reservation-links d-flex justify-content-start align-items-center">
-      <a href="{{ path('app_reservation_pdf_download', {'id': reservation.id}) }}" target="_blank" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-file-lines btn-title-icon me-2"></i>Générer un nouveau contrat</a>
+      <a href="{{ path('app_reservation_pdf_download', {'id': reservation.id}) }}" target="_blank" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-file-lines btn-title-icon me-2"></i>Voir le contrat de réservation</a>
+      <a href="{{ path('app_reservation_send_contract', {'id': reservation.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-paper-plane btn-title-icon me-2"></i>Envoyer le contrat par mail</a>
       {% if contract %}
         {% for cont in contract %}
-          <a href="{{ asset('uploads/contracts/' ~ cont.filename) }}" target="_blank" class="btn btn-primary btn-sm me-3">Voir le contrat signé</a>
-          <a href="{{ path('app_contract_file_update', {'id': cont.id, 'reservationId': cont.reservation.id}) }}" target="_blank" class="btn btn-primary btn-sm me-3">Modifier le contrat signé</a>
+          <a href="{{ asset('uploads/contracts/' ~ cont.filename) }}" target="_blank" class="btn btn-primary btn-sm me-3"><i class="fa-regular fa-eye btn-title-icon me-2"></i>Voir le contrat signé</a>
+          <a href="{{ path('app_contract_file_update', {'id': cont.id, 'reservationId': cont.reservation.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-pen-to-square btn-title-icon me-2"></i>Modifier le contrat signé</a>
         {% endfor %}
       {% else %}
         <a href="{{ path('app_contract_file_new', {'id': reservation.id}) }}" class="btn btn-primary btn-sm me-3"><i class="fa-solid fa-download btn-title-icon me-2"></i></i>Télécharger un contrat signé</a>

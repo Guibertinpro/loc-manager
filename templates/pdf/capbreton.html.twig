@@ -1,0 +1,34 @@
+{% extends "pdf/pdf-layout.html.twig" %}
+
+{% block surface %}
+  <p class="m-0"><span class="fw-bold">Surface habitable :</span> {{ reservation.apartment.surface }} M2 & balcon vue sur mer et dune</p>
+{% endblock %}
+
+{% block details %}
+  <tr>
+    <td colspan="6" style="padding: 0rem 1rem 1rem 1rem;">
+      <p class="m-0">Couloir d’entrée</p>
+      <p class="m-0">Chambre lits superposés</p>
+      <p class="m-0">Salle d’eau avec douche, lavabo, Lave-Linge WC</p>
+      <p class="m-0">Placard avec aspirateur table fer à repasser, balai sceau, produits entretien</p>
+      <p class="m-0">Cuisine équipée (Four Combiné micro-ondes, réfrigérateur, lave-vaisselle)</p>
+    </td>
+    <td colspan="6" style="padding: 0rem 1rem 1rem 1rem;">
+      <p class="m-0">Séjour avec coin repas comptoir bar salon canapé T.V.</p>
+      <p class="m-0">Mezzanine avec Chambre lit pour 2 personnes (140, avec oreillers, couvertures et protège matelas)</p>
+      <p class="m-0">Terrasse blacon abritée (avec chaises et table de jardin)</p>
+      <p class="m-0">Piscine Parking privatif</p>
+      <p class="m-0">&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="12" style="padding: 0rem 1rem 1rem 1rem;">
+      <h2 class="fw-bold">SITUATION DE LA LOCATION :</h2>
+      <p class="m-0">Appartement situé à CAPBRETON coté plage SANTOCHA proche CERS dans résidence Maison de l’Océan</p>
+      <p class="m-0">Proche BAYONNE BIARRITZ, Espagne...</p>
+      <p class="m-0">Commerces, restaurants, location vélos, et services à proximité.</p>
+      <p class="m-0">Plage au pieds du bâtiment nombreuses activité</p>
+      <p class="m-0">Surf, piste cyclable, pêche, promenade, port...</p>
+    </td>
+  </tr>
+{% endblock %}

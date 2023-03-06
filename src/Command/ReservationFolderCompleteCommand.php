@@ -41,6 +41,8 @@ class ReservationFolderCompleteCommand extends Command
 
     $reservationStateRespository = $em->getRepository(ReservationState::class);
     $configurationRepository = $em->getRepository(Configuration::class);
+    $idConigurationStateReservationFinished = $configurationRepository->find('3')->getValue();
+    $idConigurationStateReservationCanceled = $configurationRepository->find('4')->getValue();
     $idConigurationStateReservationFolderCompleted = $configurationRepository->find('6')->getValue();
     $stateFolderCompleted = $reservationStateRespository->find($idConigurationStateReservationFolderCompleted);
 
@@ -50,8 +52,9 @@ class ReservationFolderCompleteCommand extends Command
       $arrhesValidated = $reservation->isArrhesValidated();
       $soldeValidated = $reservation->isSoldeValidated();
       $contractFile = $reservation->getContractFile();
+      $stateReservation = $reservation->getState()->getId();
 
-      if ($cautionValidated == 1 && $arrhesValidated == 1 && $soldeValidated == 1 && $contractFile !== null) {
+      if ($cautionValidated == 1 && $arrhesValidated == 1 && $soldeValidated == 1 && $contractFile !== null && ($stateReservation != ($idConigurationStateReservationFinished || $idConigurationStateReservationCanceled))) {
 
         $reservation->setState($stateFolderCompleted);
         $em->persist($reservation);
